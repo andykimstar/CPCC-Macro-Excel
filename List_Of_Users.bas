@@ -1,6 +1,31 @@
-Attribute VB_Name = "List_Of_Users"
 Sub List_Of_Users()
 
+
+'***************************************** USER EDITS *********************************************
+
+' Sheet Name
+fromsheetName = "Orders"
+sheetName = "Users List"
+
+'Set the Columns in the 'Order'
+institutionColumn = "D"
+userColumn = "C"
+cityColumn = "E"
+regionColumn = "F"
+countryColumn = "H"
+affiColumn = "I"
+
+' Start of the Row in the 'List of User' page
+startRow = 4
+
+' Dates row
+DateStartRow = "J11"
+DateEndRow = "J12"
+
+'****************************************************************************************************
+
+
+'***************************************** Actual Code *********************************************
 ' Assign Variables
 Dim row As Integer
 Dim i As Integer
@@ -8,19 +33,18 @@ Dim Years As String
 Dim Count As Integer
 
 ' Enter List_Of_User Sheet to collected enetered years
-Sheets("List_Of_Users").Select
+Sheets(sheetName).Select
 
 ' Assigne variables to the date
 Dim DateFrom As String
 Dim DateTo As String
 
 ' Collect the entered From & To Date
-DateFrom = Range("I13").Value
-DateTo = Range("I14").Value
-
+DateFrom = Range(DateStartRow).Value
+DateTo = Range(DateEndRow).Value
 
 '** Move to the User Sheet
-Sheets("Orders").Select
+Sheets(fromsheetName).Select
 
 '** Count the number of rows
 No_Of_Rows = Range("A" & Rows.Count).End(xlUp).row
@@ -37,7 +61,6 @@ Next row
 ' Msg about the Number of Order
 'MsgBox "Number of Order for the fiscal Year: " & Count
 
-
 '** Collect data for the selected Year
 Dim fisical_Order As New Collection
 Dim place As String
@@ -48,12 +71,12 @@ For row = No_Of_Rows To 3 Step -1
     cellDate = Format(Cell.Value, "yyyy-mm-dd")
     
     ' Assigning variables
-    Set institution = Range("E" & row)
-    Set user = Range("D" & row)
-    Set city = Range("F" & row)
-    Set region = Range("G" & row)
-    Set country = Range("I" & row)
-    Set affiliation = Range("J" & row)
+    Set institution = Range(institutionColumn & row)
+    Set user = Range(userColumn & row)
+    Set city = Range(cityColumn & row)
+    Set region = Range(regionColumn & row)
+    Set country = Range(countryColumn & row)
+    Set affiliation = Range(affiColumn & row)
     place = city & ", " & region
     
     ' Enter only if its meets the condition of the fisical year
@@ -72,17 +95,17 @@ Next row
 
 
 '** Move to the User Sheet
-Sheets("List_Of_Users").Select
+Sheets(sheetName).Select
 
 
 '** Count the number of rows
-lastRow = Range("A" & Rows.Count).End(xlUp).row
+lastRow = Range("F" & Rows.Count).End(xlUp).row
 
 
 '** Clear the previous data
-If lastRow <> 1 Then
+If lastRow <> 3 Then
 
-    Range("A2:F" & lastRow).Clear
+    Range("A" & startRow & ":F" & lastRow).Clear
 
 End If
 
@@ -92,7 +115,7 @@ End If
 For i = 1 To fisical_Order.Count
 
     ' Declare index of items
-    rownum = i + 1 ' row number
+    rownum = i + startRow - 1 ' row number
     Item = i * 5 ' item number
     
     'Items
@@ -117,11 +140,11 @@ Next i
 ' Count the number of rows
 lastRow = Range("A" & Rows.Count).End(xlUp).row
 
-For iCntr = lastRow To 2 Step -1
+For iCntr = lastRow To startRow Step -1
     
     'if the match index is not equals to current row number, then it is a duplicate value
     If Range("B" & iCntr).Value = "" Then
-         Rows(iCntr).EntireRow.Delete
+         Range("A" & iCntr & ":F" & iCntr).EntireRow.Delete
          matchFoundIndex = 0
     Else
         matchFoundIndex = WorksheetFunction.Match(Range("B" & iCntr).Value, Range("B1:B" & lastRow), 0)
@@ -150,12 +173,19 @@ Next
 finalRow = Range("A" & Rows.Count).End(xlUp).row
 TotalRow = Range("A" & Rows.Count).End(xlUp).row + 2
 
-' Center the D to F Columns
-Range("D2" & ":F" & finalRow).HorizontalAlignment = xlCenter 'Center the column
+
 
 ' Add the number of TOTAL
 Range("E" & TotalRow) = "Total ="
 Range("F" & TotalRow) = Application.WorksheetFunction.Sum(Range("F2:F" & finalRow))
 
+' Center the D to F Columns
+Range("D" & startRow & ":F" & TotalRow).HorizontalAlignment = xlCenter 'Center the column
+Range("F" & startRow & ":F" & finalRow).Borders(xlEdgeRight).LineStyle = XlLineStyle.xlContinuous ' Right Border in Column
+Range("A" & finalRow & ":F" & finalRow).Borders(xlEdgeBottom).LineStyle = XlLineStyle.xlContinuous ' Bottom Border in Column
+Range("E" & TotalRow).Font.Bold = True 'Bold
+Range("F" & TotalRow).Font.Bold = True 'Bold
 
 End Sub
+
+
