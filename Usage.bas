@@ -1,26 +1,67 @@
-Attribute VB_Name = "Usage"
 Sub Usage()
 
 
-' Enter List_Of_User Sheet to collected enetered years
-Sheets("Usage").Select
+'***************************************** USER EDITS *********************************************
 
-' Assigne variables to the date
+' Sheet Name
+fromsheetName = "Orders"
+sheetName = "Usage"
+
+' Dates row
+DateStartRow = "R15"
+DateEndRow = "R16"
+
+' Set the Columns in the 'Order'
+newClientColumn = "K"
+culColumn = "L"
+strColumn = "M"
+mlCulColumn = "N"
+mlStrColumn = "O"
+mlConColumn = "P"
+
+' Set the Rows in the 'Usage'
+requestUsage = 6
+newCliUsage = 7
+culUsage = 8
+strUsage = 9
+volCulUsage = 10
+volMedUsage = 11
+
+'****************************************************************************************************
+
+
+
+'************************************** Usage: Find Years *******************************************
+
+'Dim Year As String
 Dim DateFrom As String
 Dim DateTo As String
 
-' Collect the entered From & To Date
-YearEntered = Range("B3").Value
-YearSplit = Split(YearEntered, "-")
-YearFrom = YearSplit(0)
-YearTo = YearSplit(1)
-
-DateFrom = YearFrom & "-05-01"
-DateTo = YearTo & "-04-30"
-
-
 '** Move to the User Sheet
-Sheets("Orders").Select
+Sheets(sheetName).Select
+
+' Collect the entered From & To Date
+DateFrom = Range(DateStartRow).Value
+DateTo = Range(DateEndRow).Value
+
+' Find the Months
+FromMonth = CInt(Month(DateFrom))
+ToMonth = CInt(Month(DateTo))
+
+' Find the Years
+FromYear = CStr(Year(DateFrom))
+ToYear = CStr(Year(DateTo))
+
+' Find the Month Name
+FromString = MonthName(FromMonth, True)
+ToString = MonthName(ToMonth, True)
+
+
+
+'**************************************** Order Sheet: Data Collection ***********************************************
+
+' Move to the User Sheet
+Sheets(fromsheetName).Select
 
 '** Count the number of rows
 No_Of_Rows = Range("A" & Rows.Count).End(xlUp).row
@@ -35,18 +76,25 @@ Dim mlCulList As New Collection
 Dim mlMedList As New Collection
 Dim mlConList As New Collection
 
+' Collection of each requests
+Dim order_Media As New Collection
+Dim type_Media As New Collection
+
 ' Loop Through to collect data for the fisical year
 For row = No_Of_Rows To 3 Step -1
     Set Cell = Range("A" & row)
     cellDate = Format(Cell.Value, "yyyy-mm-dd")
     
     ' Assigning variables
-    Set new_Client = Range("K" & row)
-    Set num_Cultures = Range("L" & row)
-    Set num_Strain = Range("M" & row)
-    Set ml_Culture = Range("N" & row)
-    Set ml_Medium = Range("O" & row)
-    Set ml_Concentrate = Range("P" & row)
+    Set new_Client = Range(newClientColumn & row)
+    Set num_Cultures = Range(culColumn & row)
+    Set num_Strain = Range(strColumn & row)
+    Set ml_Culture = Range(mlCulColumn & row)
+    Set ml_Medium = Range(mlStrColumn & row)
+    Set ml_Concentrate = Range(mlConColumn & row)
+    
+     ' Find the Media
+    Set media = Range("R" & row)
     
     ' Enter only if its meets the condition of the fisical year
     If cellDate >= DateFrom And cellDate <= DateTo Then
@@ -60,33 +108,59 @@ For row = No_Of_Rows To 3 Step -1
             newClientList.Add cellDate
         End If
         
+        '** # of Cultures
         If IsNumeric(num_Cultures) And Not IsEmpty(num_Cultures) Then
             numCulList.Add cellDate
             numCulList.Add num_Cultures
         End If
         
+        '** # of Strain
         If IsNumeric(num_Strain) And Not IsEmpty(num_Strain) Then
             numStraList.Add cellDate
             numStraList.Add num_Strain
         End If
          
+        '** mL of Cultures
         If IsNumeric(ml_Culture) And Not IsEmpty(ml_Culture) Then
             mlCulList.Add cellDate
             mlCulList.Add ml_Culture
         End If
          
+        '** L of Medium
         If IsNumeric(ml_Medium) And Not IsEmpty(ml_Medium) Then
             mlMedList.Add cellDate
             mlMedList.Add ml_Medium
         End If
         
+        '** mL of Concentrate
         If IsNumeric(ml_Concentrate) And Not IsEmpty(ml_Concentrate) Then
             mlConList.Add cellDate
             mlConList.Add ml_Concentrate
         End If
         
+        ' Only collect data if its a matching month
+        If Not IsEmpty(media) Then
+            'Add the country data into the monthly list
+            order_Media.Add cellDate
+            order_Media.Add media
+            'MsgBox media
+        End If
+        
+         ' Only collect data if its a matching month
+        If Not IsEmpty(media) Then
+            'Add the country data into the monthly list
+            type_Media.Add cellDate
+            type_Media.Add media
+            type_Media.Add mlMedList
+            type_Media.Add mlConList
+            'MsgBox media
+        End If
+        
     End If
 Next row
+
+
+'**************************************** Usage: Data Input ***********************************************
 
 Dim requestCount As Integer
 Dim newClientCount As Integer
@@ -97,7 +171,7 @@ Dim mlMedCount As Integer
 Dim mlConCount As Integer
 
 
-Sheets("Usage").Select
+Sheets(sheetName).Select
 
 '*** Request
 '** Request per Month
@@ -107,6 +181,7 @@ DateNext = DateFrom
 ' Count up the 12 month
 For n = 1 To 12
 
+    ' *** Overall Usage
     ' CACount refreshes to zero
    requestCount = 0
 
@@ -125,11 +200,10 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 1
-    Cells(6, Index) = requestCount
+    Cells(requestUsage, Index) = requestCount
     
-    ' Find the next month
-    DateNext = DateAdd("m", 1, DateNext)
-    'MsgBox Month(DateNext)
+    ' Find the Next month
+    DateNext = DateAdd("m", 1, DateNext) ' Find the next month
 
 Next n
 
@@ -159,7 +233,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 1
-    Cells(7, Index) = newClientCount
+    Cells(newCliUsage, Index) = newClientCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -194,7 +268,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 1
-    Cells(8, Index) = numCultureCount
+    Cells(culUsage, Index) = numCultureCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -218,11 +292,11 @@ For n = 1 To 12
     For i = 1 To numStraList.Count Step 2
     
         'Each CA Request Date
-        StrainDate = numStraList(i)
+        strainDate = numStraList(i)
         StrainRequest = numStraList(i + 1)
 
         ' If the Month matches add
-        If Month(DateNext) = Month(StrainDate) Then
+        If Month(DateNext) = Month(strainDate) Then
             numStrainCount = numStrainCount + StrainRequest
         End If
     
@@ -230,7 +304,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 1
-    Cells(9, Index) = numStrainCount
+    Cells(strUsage, Index) = numStrainCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -265,7 +339,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 1
-    Cells(10, Index) = volCultureCount
+    Cells(volCulUsage, Index) = volCultureCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -301,7 +375,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 1
-    Cells(11, Index) = mlMediumCount
+    Cells(volMedUsage, Index) = mlMediumCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -309,154 +383,5 @@ For n = 1 To 12
 
 Next n
 
-
-'************************* USAGE Year CPCC
-yearSelect = YearFrom & "-" & YearTo
-
-' Find the row
-yearCount = YearTo - 1999
-yearFinal = 15 + yearCount
-'MsgBox yearFinal
-
-' Find the number of users
-Sheets("List_Of_Users").Select
-userRow = Range("A" & Rows.Count).End(xlUp).row - 1
-
-' Find each of the value
-Sheets("Usage").Select
-numRequest = Range("N6")
-numCultures = Range("N8")
-'numUsers = userRow
-numUsers = 0
-numNewUsers = Range("N7")
-
-
-' ** Determine Whether the year exists
-i = 15
-Exist = False
-Do While Cells(i, 1).Value <> "Total"
-    'your code here
-    If Cells(i, 1).Value = yearSelect Then
-        Exist = True
-        yearIndex = i
-    End If
-    i = i + 1
-Loop
-
-'MsgBox yearIndex
-'MsgBox Exist
-
-
-' ** Add the values into the chart
-
-' Case 1. The year does NOT exists
-If Exist = False Then
-
-    ' Set the variables
-    yearIndex = i
-    totalFinal = yearIndex + 1
-    
-    ' Shift a row down to add the year
-    Range("A" & yearIndex & ":E" & yearIndex).Insert shift:=xlDown
-    
-    ' Add a new row of year
-    Range("A" & yearIndex) = yearSelect
-    Range("B" & yearIndex) = numRequest
-    Range("C" & yearIndex) = numCultures
-    Range("D" & yearIndex) = numUsers
-    Range("E" & yearIndex) = numNewUsers
-    
-    ' Fix the sums in the TOTAL Row
-    Range("B" & totalFinal) = "=SUM(B15:B" & yearIndex & ")"
-    Range("C" & totalFinal) = "=SUM(C15:C" & yearIndex & ")"
-    Range("D" & totalFinal) = "=SUM(D15:D" & yearIndex & ")"
-    Range("E" & totalFinal) = "=SUM(E15:E" & yearIndex & ")"
-    
-    
-' Case 2. The year does exists
-Else
-    Range("B" & yearIndex) = numRequest
-    Range("C" & yearIndex) = numCultures
-    Range("D" & yearIndex) = numUsers
-    Range("E" & yearIndex) = numNewUsers
-
-End If
-
-
-' Find the most recent year for the Graph Chart
-yearFinal = i - 1
-UsageYear = Range("A" & yearFinal)
-UsageSplit = Split(UsageYear, "-")
-UsageTo = UsageSplit(1)
-'MsgBox UsageTo
-
-
-'****************** Create Chart ******************
-
-'** Move to the User Sheet
-Sheets("Usage").Select
-
-'** Delete Charts in the Sheet
-If Worksheets("Usage").ChartObjects.Count > 0 Then
-    Worksheets("Usage").ChartObjects.Delete
-End If
-
-'** Create the Chart
-Set MyRange = Sheets("Usage").Range("A15:A" & yearFinal & ",B15:C" & yearFinal)
-ActiveSheet.Shapes.AddChart.Select
-ActiveChart.SetSourceData Source:=MyRange
-ActiveChart.ChartType = xlLine
-
-' Chart Layout
-With PlotArea
-    ActiveChart.ApplyLayout (1)
-End With
-
-' Chart title
-With ActiveChart
-    .ChartTitle.Text = "Usage of CPCC 1998" & " - " & UsageTo
-End With
-
-' Axis Title
-With ActiveChart.Axes(xlValue)
- .HasTitle = True
- With .AxisTitle
- .Caption = "Amount"
- .Font.Name = "Arial"
- .Font.Size = 10
- '.Characters(10, 8).Font.Italic = True
- End With
-End With
-
-' Data setup
-With ActiveChart
-    '.DataLabels.Font.Name = "Arial"
-    '.DataLabels.Font.Size = 11
-    '.DataLabels.ShowPercentage = True
-    '.DataLabels.ShowValue = True
-    .SeriesCollection(1).Name = "=""Number of Requests"""
-    .SeriesCollection(1).Points(1).Format.Fill.ForeColor.RGB = RGB(153, 153, 255)
-    .SeriesCollection(2).Name = "=""Number of Cultures"""
-    .SeriesCollection(2).Points(1).Format.Fill.ForeColor.RGB = RGB(153, 51, 102)
-End With
-
-' Size of the Line
-With ActiveChart.PlotArea
-    .Width = 245
-    .Height = 200
-    .Left = 20
-    .Top = 100
-End With
-
-' Size of the Line Chart
-With ActiveChart.Parent
-     .Height = 320 ' resize
-     .Width = 420  ' resize
-     .Top = 160    ' reposition
-     .Left = 300   ' reposition
-End With
-
-' Select the Source_of_Requests Sheet
-Sheets("Usage").Select
-
 End Sub
+
