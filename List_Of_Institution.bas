@@ -1,8 +1,21 @@
-Attribute VB_Name = "List_Of_Institution"
 Sub List_Of_Institution()
 
+'***************************************** USER EDITS *********************************************
+
+' Sheet Name
+fromsheetName = "Users List"
+sheetName = "Institution List"
+
+' Start of the Row in the 'List of Institution' page
+rowStartNumber = 4
+
+
+'****************************************************************************************************
+
+
+'***************************************** Actual Code *********************************************
 '** Move to the User Sheet
-Sheets("List_Of_Users").Select
+Sheets(fromsheetName).Select
 
 Dim CA_Collection As New Collection
 Dim CC_Collection As New Collection
@@ -14,6 +27,7 @@ Dim nameInstitution As String
 
 lastRow = Range("A" & Rows.Count).End(xlUp).row
 
+
 ' Loop Through to collect data for the fisical year
 For row = 2 To lastRow
     
@@ -23,7 +37,7 @@ For row = 2 To lastRow
     Set region = Range("C" & row)
     Set country = Range("D" & row)
     Set affiliation = Range("E" & row)
-    Set Request = Range("F" & row)
+    Set request = Range("F" & row)
     nameInstitution = institution & ", " & region
 
     
@@ -39,7 +53,7 @@ For row = 2 To lastRow
         CAList.Add country 'fourth Value
         CAList.Add affiliation 'fifth Value
         CAList.Add "Canadian Academic" 'sixth Value
-        CAList.Add Request 'seventh Value
+        CAList.Add request 'seventh Value
         CA_Collection.Add CAList
     End If
     
@@ -54,7 +68,7 @@ For row = 2 To lastRow
         CCList.Add country 'fourth Value
         CCList.Add affiliation 'fifth Value
         CCList.Add "Canadian Commerical" 'sixth Value
-        CCList.Add Request 'seventh Value
+        CCList.Add request 'seventh Value
         CC_Collection.Add CCList
     End If
     
@@ -70,7 +84,7 @@ For row = 2 To lastRow
         CGList.Add country 'fourth Value
         CGList.Add affiliation 'fifth Value
         CGList.Add "Canadian Government" 'sixth Value
-        CGList.Add Request 'seventh Value
+        CGList.Add request 'seventh Value
         CG_Collection.Add CGList
     End If
     
@@ -85,7 +99,7 @@ For row = 2 To lastRow
         IAList.Add country 'fourth Value
         IAList.Add affiliation 'fifth Value
         IAList.Add "International Academic" 'sixth Value
-        IAList.Add Request 'seventh Value
+        IAList.Add request 'seventh Value
         IA_Collection.Add IAList
     End If
     
@@ -101,7 +115,7 @@ For row = 2 To lastRow
         ICList.Add country 'fourth Value
         ICList.Add affiliation 'fifth Value
         ICList.Add "International Commerical" 'sixth Value
-        ICList.Add Request 'seventh Value
+        ICList.Add request 'seventh Value
         IC_Collection.Add ICList
     End If
     
@@ -117,7 +131,7 @@ For row = 2 To lastRow
         IGList.Add country 'fourth Value
         IGList.Add affiliation 'fifth Value
         IGList.Add "International Government" 'sixth Value
-        IGList.Add Request 'seventh Value
+        IGList.Add request 'seventh Value
         IG_Collection.Add IGList
     End If
     
@@ -139,7 +153,7 @@ Dim TotalRequestSum As Integer
 Dim TotalInstitutionSum As Integer
 
 '** Move to the Fisical_Year Sheet
-Sheets("Fisical_Institution").Select
+Sheets(sheetName).Select
 
 
 '** Count the number of rows
@@ -147,10 +161,11 @@ lastRow = Range("A" & Rows.Count).End(xlUp).row
 
 
 '** Clear the previous data
-If lastRow <> 1 Then
-    Range("A2:E" & lastRow).Clear
+If lastRow <> 3 Then
+    Range("A" & rowStartNumber & ":E" & lastRow).Clear
 End If
 
+'MsgBox Range("A" & Rows.Count).End(xlUp).row
 
 '** Start going through list of Total Collection
 For Each collectionItem In TotalCollection
@@ -160,9 +175,12 @@ For Each collectionItem In TotalCollection
 
     '** Find the starting row
     startRow = Range("A" & Rows.Count).End(xlUp).row + 2
+    'MsgBox startRow
+    'startRow = rowStartNumber
     
     '** Enter data of each Institution Collection
-    ' Loop through to enter data into the Fisical_Year Sheet
+    
+    ' Loop through to enter data into the 'Institution List' Sheet
     For i = 1 To collectionItem.Count
     
         ' Declare index of items
@@ -190,29 +208,32 @@ For Each collectionItem In TotalCollection
     'MsgBox rownum
     'startRow = startRow + 1
     'MsgBox Range("A" & startRow & ":A" & rownum).Count
-    For iCntr = startRow + 1 To rownum
+    'MsgBox rownum
+    
+    ' Un-block once it is figured out
+    ''For iCntr = startRow + 1 To rownum
     
         'if the match index is not equals to current row number, then it is a duplicate value
-        If Range("B" & iCntr).Value <> "" Then
+        ''If Range("B" & iCntr).Value <> "" Then
         
-            matchFoundIndex = WorksheetFunction.Match(Range("A" & iCntr).Value, Range("A" & startRow & ":A" & rownum), 0)
+            ''matchFoundIndex = WorksheetFunction.Match(Range("A" & iCntr).Value, Range("A" & startRow + 1 & ":A" & rownum), 0)
                'if the match index is not equals to current row number, then it is a duplicate value
-            If iCntr <> matchFoundIndex Then
+            ''If iCntr <> matchFoundIndex Then
             
-                original = Cells(matchFoundIndex, 2)
-                Duplicate = Cells(iCntr, 2)
+                ''original = Cells(matchFoundIndex, 2)
+                ''Duplicate = Cells(iCntr, 2)
                 
                     'duplicate_request = Cells(iCntr, 6)
-                original_request = original & ", " & Duplicate
-                Cells(matchFoundIndex, 2) = original_request
-            
+                ''original_request = original & ", " & Duplicate
+                ''Cells(matchFoundIndex, 2) = original_request
+          
                 
                 'Delete Repetitive data
                 'Range("A" & iCntr & ":E" & iCntr).Delete Shift:=xlUp
-            End If
-        End If
+            ''End If
+        ''End If
         
-    Next iCntr
+    ''Next iCntr
     
     '** Name of the Affiliation
     Range("A" & startRow) = affiliation & " = " & full_Aff
@@ -258,5 +279,11 @@ Range("E" & lastRow).Font.Bold = True
 Range("A" & lastRow & ":E" & lastRow).Select
 Selection.Interior.Color = vbYellow
 
+'** Center & Border
+Range("C" & rowStartNumber & ":E" & lastRow).HorizontalAlignment = xlCenter 'Center the column
+Range("E" & rowStartNumber & ":E" & lastRow).Borders(xlEdgeRight).LineStyle = XlLineStyle.xlContinuous ' Right Border in Column
+Range("A" & lastRow & ":E" & lastRow).Borders(xlEdgeBottom).LineStyle = XlLineStyle.xlContinuous ' Bottom Border in Column
+
 
 End Sub
+
