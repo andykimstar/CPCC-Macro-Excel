@@ -1,8 +1,10 @@
 # Excel-Automation-Tool
 
 ## Description
-The development of this product is completely led by myself from design, development, testing and management (CI/CD) as part of the Part-Time work at the Canadian Phycology Centre (CPCC) Biology Lab at University of Wateroo. 
+The development of this product is completely led by myself from design, development, testing and management (CI/CD) as part of the Part-Time work at the Canadian Phycological Culture Centre (CPCC) Biology Lab at University of Wateroo. 
 It was initiated by myself with suggestion and presention to the Professor in effort to help the tracking of the Sales & Customers of the Lab. 
+
+Canadian Phycological Culture Centre (CPCC) Link: https://uwaterloo.ca/canadian-phycological-culture-centre/
 
 ## Purpose
 This code is to automate the data processing and collection to evaluate the performance of the CPCC Biology Lab in University of Waterloo. 
