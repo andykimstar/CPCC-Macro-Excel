@@ -1,10 +1,5 @@
 Sub Service_Invoiced_Breakdown()
 
-Dim DateFrom As String
-Dim DateTo As String
-
-
-
 '***************************************** USER EDITS *********************************************
 
 ' Sheet Name
@@ -34,7 +29,8 @@ DateStartRow = "U15"
 DateEndRow = "U16"
 
 '****************************************************************************************************
-
+Dim DateFrom As String
+Dim DateTo As String
 
 '** Move to the Service Revenue Breakdown Sheet
 Sheets(sheetName).Select
