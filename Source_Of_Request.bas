@@ -1,27 +1,61 @@
-Attribute VB_Name = "Source_Of_Request"
-Sub Source_Of_Request()
+Sub Source_Of_Request2()
 
-Dim Year As String
+
+'***************************************** USER EDITS *********************************************
+
+' Sheet Name
+fromsheetName = "Orders"
+sheetName = "Source Requests"
+
+'Set the Columns in the 'Order'
+affColumn = "I"
+countryColumn = "H"
+CAstart = 4
+IAstart = 5
+CGstart = 6
+IGstart = 7
+CCstart = 8
+ICstart = 9
+AffStart = CAstart
+AffEnd = ICstart
+
+' Start of the Country Row in the 'Source of Request' page
+startCountry = 30
+
+' Dates row
+DateStartRow = "V13"
+DateEndRow = "V14"
+
+'****************************************************************************************************
+
+
+'Dim Year As String
 Dim DateFrom As String
 Dim DateTo As String
 
 '** Move to the User Sheet
-Sheets("Source_of_Requests").Select
+Sheets(sheetName).Select
 
 ' Collect the entered From & To Date
-Year = Range("C2").Value
-YearSplit = Split(Year, "-")
-YearFrom = YearSplit(0)
-YearTo = YearSplit(1)
+DateFrom = Range(DateStartRow).Value
+DateTo = Range(DateEndRow).Value
 
-DateFrom = YearFrom & "-05-01"
-DateTo = YearTo & "-04-30"
-'MsgBox DateFrom
-'MsgBox DateTo
+' Find the Months
+FromMonth = CInt(Month(DateFrom))
+ToMonth = CInt(Month(DateTo))
+
+' Find the Years
+FromYear = CStr(Year(DateFrom))
+ToYear = CStr(Year(DateTo))
+
+' Find the Month Name
+FromString = MonthName(FromMonth, True)
+ToString = MonthName(ToMonth, True)
 
 
-'** Move to the User Sheet
-Sheets("Orders").Select
+' Move to the User Sheet
+Sheets(fromsheetName).Select
+
 
 '** Count the number of rows
 No_Of_Rows = Range("A" & Rows.Count).End(xlUp).row
@@ -48,7 +82,7 @@ For row = No_Of_Rows To 3 Step -1
     cellDate = Format(Cell.Value, "yyyy-mm-dd")
     
     ' Find the affiliation
-    Set affiliation = Range("J" & row)
+    Set affiliation = Range(affColumn & row)
     
     ' Only collect data within the selected year
     If cellDate >= DateFrom And cellDate <= DateTo Then
@@ -91,9 +125,8 @@ TotalRequests.Add IC_Request
 TotalRequests.Add IG_Request
 
 
-'** Move to the User Sheet
-Sheets("Source_of_Requests").Select
-
+'** Move to the Source of Requests Sheet
+Sheets(sheetName).Select
 
 Dim CACount As Integer
 Dim CCount As Integer
@@ -101,7 +134,6 @@ Dim CGCount As Integer
 Dim IACount As Integer
 Dim ICCount As Integer
 Dim IGCount As Integer
-
 
 '*** CA
 '** CA Request per Month
@@ -130,7 +162,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 2
-    Cells(6, Index) = CACount
+    Cells(CAstart, Index) = CACount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -166,7 +198,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 2
-    Cells(10, Index) = CCCount
+    Cells(CCstart, Index) = CCCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -201,7 +233,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 2
-    Cells(8, Index) = CGCount
+    Cells(CGstart, Index) = CGCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -236,7 +268,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 2
-    Cells(7, Index) = IACount
+    Cells(IAstart, Index) = IACount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -271,7 +303,7 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 2
-    Cells(11, Index) = ICCount
+    Cells(ICstart, Index) = ICCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
@@ -306,17 +338,19 @@ For n = 1 To 12
     
     ' Locate the entry of the data
     Index = n + 2
-    Cells(9, Index) = IGCount
+    Cells(IGstart, Index) = IGCount
     
     ' Find the next month
     DateNext = DateAdd("m", 1, DateNext)
 
 Next n
 
+
+
 '*************** Beginning of the Counrty Request Function ***************
 
 '** Move to the User Sheet
-Sheets("Orders").Select
+Sheets(fromsheetName).Select
 
 
 '** Collect data for the selected Year
@@ -343,7 +377,7 @@ For n = 1 To 12
         cellDate = Format(Cell.Value, "yyyy-mm-dd")
         
         ' Find the Country
-        Set country = Range("I" & row)
+        Set country = Range(countryColumn & row)
         
         ' Only collect data within the selected year
         If cellDate >= DateFrom And cellDate <= DateTo Then
@@ -372,9 +406,7 @@ Next n
 
 
 '** Move to the User Sheet
-Sheets("Source_of_Requests").Select
-
-
+Sheets(sheetName).Select
 
 '** Find the List of the Countries
 
@@ -386,7 +418,7 @@ No_Of_Rows = Range("A" & Rows.Count).End(xlUp).row
 lastRow = No_Of_Rows - 1
 
 ' Add the each country to the Country Collection
-For n = 33 To lastRow
+For n = startCountry To lastRow
     country = Range("A" & n)
     CountryList.Add country
 Next n
@@ -415,7 +447,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 3) = Counter
     
 Next EachCountry
@@ -439,7 +471,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 4) = Counter
     
 Next EachCountry
@@ -464,7 +496,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 5) = Counter
     
 Next EachCountry
@@ -490,7 +522,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 6) = Counter
     
 Next EachCountry
@@ -516,7 +548,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 7) = Counter
     
 Next EachCountry
@@ -541,7 +573,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 8) = Counter
     
 Next EachCountry
@@ -566,7 +598,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 9) = Counter
     
 Next EachCountry
@@ -591,7 +623,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 10) = Counter
     
 Next EachCountry
@@ -616,7 +648,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 11) = Counter
     
 Next EachCountry
@@ -641,7 +673,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 12) = Counter
     
 Next EachCountry
@@ -666,7 +698,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 13) = Counter
     
 Next EachCountry
@@ -691,7 +723,7 @@ For EachCountry = 1 To CountryList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachCountry + 32
+    col = EachCountry + startCountry - 1
     Cells(col, 14) = Counter
     
 Next EachCountry
@@ -701,15 +733,15 @@ Next EachCountry
 '****************** Create Chart ******************
 
 '** Move to the User Sheet
-Sheets("Source_of_Requests").Select
+Sheets(sheetName).Select
 
 '** Delete Charts in the Sheet
-If Worksheets("Source_of_Requests").ChartObjects.Count > 0 Then
-    Worksheets("Source_of_Requests").ChartObjects.Delete
+If Worksheets(sheetName).ChartObjects.Count > 0 Then
+    Worksheets(sheetName).ChartObjects.Delete
 End If
 
 '** Create the Chart
-Set MyRange = Sheets("Source_of_Requests").Range("A6:A11,O6:P11")
+Set MyRange = Sheets(sheetName).Range("A" & AffStart & ":A" & AffEnd & ",O" & AffStart & ":P" & AffEnd)
 ActiveSheet.Shapes.AddChart.Select
 ActiveChart.SetSourceData Source:=MyRange
 ActiveChart.ChartType = xl3DPie
@@ -748,15 +780,17 @@ With ActiveChart.PlotArea
     .Top = 100
 End With
 
-' Size of the Pie Chart
+' Location of the Pie Chart
 With ActiveChart.Parent
      .Height = 220 ' resize
      .Width = 450  ' resize
-     .Top = 190    ' reposition
-     .Left = 210   ' reposition
+     .Top = 210    ' reposition
+     .Left = 180   ' reposition
 End With
 
-' Select the Source_of_Requests Sheet
-Sheets("Source_of_Requests").Select
+' Select the Source of Requests Sheet
+Sheets(sheetName).Select
 
 End Sub
+
+
