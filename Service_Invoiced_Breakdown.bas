@@ -1,31 +1,68 @@
-Attribute VB_Name = "Service_Invoiced_Breakdown"
 Sub Service_Invoiced_Breakdown()
 
-Dim Year As String
 Dim DateFrom As String
 Dim DateTo As String
 
+
+
+'***************************************** USER EDITS *********************************************
+
+' Sheet Name
+fromsheetName = "Orders"
+sheetName = "Service Revenue Breakdown"
+
+'Set the Columns in the 'Order'
+invoicedDateColumn = "AG"
+cultureCostColumn = "U"
+'mediaTypeColumn = ""
+mediaCostColumn = "V"
+categoryTypeColumn = "W"
+categoryCostColumn = "X"
+shippingCostColumn = "Y"
+OutstandingColumn = "AH"
+
+' Sheet Color Design
+sideColor = RGB(255, 204, 102) ' Side column color
+totalColor = RGB(255, 153, 102) ' Total cell Color
+
+' Start of the Ordered Row in the 'Service Revenue Breakdown' page
+invoicedStartRow = 12
+rowGap = 3
+
+' Dates row
+DateStartRow = "U15"
+DateEndRow = "U16"
+
+'****************************************************************************************************
+
+
 '** Move to the Service Revenue Breakdown Sheet
-Sheets("Service_Revenue_Breakdown").Select
+Sheets(sheetName).Select
 
 ' Collect the entered From & To Date
-Year = Range("C2").Value
-YearSplit = Split(Year, "-")
-YearFrom = YearSplit(0)
-YearTo = YearSplit(1)
+DateFrom = Range(DateStartRow).Value
+DateTo = Range(DateEndRow).Value
 
-DateFrom = YearFrom & "-05-01"
-DateTo = YearTo & "-04-30"
-'MsgBox DateFrom
-'MsgBox DateTo
+' Find the Months
+FromMonth = CInt(Month(DateFrom))
+ToMonth = CInt(Month(DateTo))
+
+' Find the Years
+FromYear = CStr(Year(DateFrom))
+ToYear = CStr(Year(DateTo))
+
+' Find the Month Name
+FromString = MonthName(FromMonth, True)
+ToString = MonthName(ToMonth, True)
 
 
-'** Move to the Order Sheet
-Sheets("Orders").Select
+
+'** Move to the 'Order' Sheet
+Sheets(fromsheetName).Select
 
 '** Count the number of rows
 No_Of_Rows = Range("A" & Rows.Count).End(xlUp).row
-
+MsgBox No_Of_Rows
 
 '*************** Beginning of the Service Revenue Breakdown Function ***************
 
@@ -39,17 +76,17 @@ Dim OutstandingItem As New Collection
 For row = No_Of_Rows To 3 Step -1
 
     ' Find the date of each data
-    Set Cell = Range("AH" & row)
+    Set Cell = Range(invoicedDateColumn & row)
     cellDate = Format(Cell.Value, "yyyy-mm-dd")
     
     ' Find the invoicedItem
-    Set cultureCost = Range("T" & row)
-    Set mediaType = Range("U" & row)
-    Set mediaCost = Range("V" & row)
-    Set CategoryType = Range("W" & row)
-    Set categoryTypeCost = Range("X" & row)
-    Set shippingCost = Range("Y" & row)
-    Set Outstanding = Range("AI" & row)
+    Set cultureCost = Range(cultureCostColumn & row)
+    'Set mediaType = Range(mediaTypeColumn & row)
+    Set mediaCost = Range(mediaCostColumn & row)
+    Set CategoryType = Range(categoryTypeColumn & row)
+    Set categoryTypeCost = Range(categoryCostColumn & row)
+    Set shippingCost = Range(shippingCostColumn & row)
+    Set Outstanding = Range(OutstandingColumn & row)
     
     'MsgBox serviceFee
     
@@ -67,7 +104,8 @@ For row = No_Of_Rows To 3 Step -1
         
         ' Media
         If IsNumeric(mediaCost) And Not IsEmpty(mediaCost) Then
-            invoicedItem.Add mediaType
+            'invoicedItem.Add mediaType
+            invoicedItem.Add "Concentrate"
             invoicedItem.Add mediaCost
             invoicedItem.Add cellDate
         End If
@@ -104,7 +142,7 @@ For row = No_Of_Rows To 3 Step -1
         
         ' Media
         If IsNumeric(mediaCost) And Not IsEmpty(mediaCost) Then
-            OutstandingList.Add mediaType
+            OutstandingList.Add "Concentrate"
             OutstandingList.Add mediaCost
         End If
         
@@ -127,13 +165,18 @@ For row = No_Of_Rows To 3 Step -1
 Next row
 
 
-Sheets("Service_Revenue_Breakdown").Select
 
+
+'** Back to the 'Service Revenue Breakdown' Sheet
+Sheets(sheetName).Select
+
+MsgBox invoicedStartRow
+'MsgBox OutstandingList.Count
 
 '** Enter the Invoiced Items
 ' Remove the previous list of Invoiced items
-lastRow = Range("A" & Rows.Count).End(xlUp).row - 1
-Range("A" & 13 & ":P" & lastRow).Delete shift:=xlUp
+lastRow = Range("A" & Rows.Count).End(xlUp).row
+Range("A" & invoicedStartRow & ":P" & lastRow).Delete shift:=xlUp
 
 
 '** Enter the Invoiced Items
@@ -166,13 +209,14 @@ For Each c_Item In categoryItem
 Next c_Item
 
 BreakdownList.Add "Shipping"
+'MsgBox BreakdownList.Count
 
 
+'*******
 ' Enter the values in the list of Invoiced Items
 For Index = 1 To BreakdownList.Count
 
-    Counter = 12 + Index
-    Range("A" & Counter & ":P" & Counter).Insert shift:=xlDown  ' Insert the new row and shift down
+    Counter = invoicedStartRow - 1 + Index
     Range("C" & Counter & ":P" & Counter).NumberFormat = "$#,##0.00" ' Make the cells a currency
     Range("A" & Counter) = BreakdownList(Index)
     
@@ -234,7 +278,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 2) = totalSum
     
 Next EachBreakdown
@@ -259,7 +303,8 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
+    'MsgBox col
     Cells(col, 3) = totalSum
     
 Next EachBreakdown
@@ -284,7 +329,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 4) = totalSum
     
 Next EachBreakdown
@@ -309,7 +354,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 5) = totalSum
     
 Next EachBreakdown
@@ -334,7 +379,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 6) = totalSum
     
 Next EachBreakdown
@@ -359,7 +404,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 7) = totalSum
     
 Next EachBreakdown
@@ -384,7 +429,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 8) = totalSum
     
 Next EachBreakdown
@@ -408,7 +453,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 9) = totalSum
     
 Next EachBreakdown
@@ -433,7 +478,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 10) = totalSum
     
 Next EachBreakdown
@@ -457,7 +502,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 11) = totalSum
     
 Next EachBreakdown
@@ -481,7 +526,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 12) = totalSum
     
 Next EachBreakdown
@@ -505,7 +550,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 13) = totalSum
     
 Next EachBreakdown
@@ -530,7 +575,7 @@ For EachBreakdown = 1 To BreakdownList.Count
     Next i
     
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     Cells(col, 14) = totalSum
     
 Next EachBreakdown
@@ -541,7 +586,7 @@ Next EachBreakdown
 For EachBreakdown = 1 To BreakdownList.Count
       
     ' Locate the entry of the data
-    col = EachBreakdown + 12
+    col = EachBreakdown + invoicedStartRow - 1
     SumFormula = "=SUM(B" & col & ":N" & col & ")"
     Cells(col, 15) = SumFormula
     
@@ -555,14 +600,17 @@ finalRow = Range("A" & Rows.Count).End(xlUp).row
 For EachBreakdown = 1 To BreakdownList.Count
       
     ' Locate the entry of the data
-    col = EachBreakdown + 12
-    PercentFormula = "=O" & col & "/O" & finalRow
+    col = EachBreakdown + invoicedStartRow - 1
+    PercentFormula = "=O" & col & "/O" & finalRow + 1
     Cells(col, 16) = PercentFormula
+    Range("P" & col).NumberFormat = "0.0%"
     
 Next EachBreakdown
 
 
 '***** Total_of_Invoiced
+Range("A" & finalRow + 1) = "Total ="
+
 ' Loop through the list of items
 For EachTotal = 1 To 15
       
@@ -571,42 +619,27 @@ For EachTotal = 1 To 15
     
     colName = Split(Cells(1, rowStart).Address(True, False), "$")
     Col_Letter = colName(0)
-    sumEnd = finalRow - 1
+    sumEnd = finalRow
     
-    SumTotal = "=SUM(" & Col_Letter & "13:" & Col_Letter & sumEnd & ")"
-    Cells(finalRow, rowStart) = SumTotal
+    SumTotal = "=SUM(" & Col_Letter & invoicedStartRow & ":" & Col_Letter & sumEnd & ")"
+    Cells(finalRow + 1, rowStart) = SumTotal
     
 Next EachTotal
 
-
-' Create the Invoiced CHART
-Range("B13:O" & finalRow).NumberFormat = "$#,##0.00"  'Make the cells in money format
-Range("B13:B" & finalRow).Font.Color = vbBlack  ' Make the column cells in Black
-Range("P13:P" & finalRow).NumberFormat = "0.00%"  'Make the cells in percent format
-Range("C13:P" & finalRow).Font.Bold = True  'Make the cells bold
-Range("C12:N12").Interior.Color = RGB(221, 235, 247)  'Color the Month rows BLUE
-Range("C13:P" & finalRow).Interior.Color = RGB(255, 255, 255)  'Color the Month rows WHITE
-Range("A" & finalRow & ":P" & finalRow).Borders(xlEdgeTop).LineStyle = XlLineStyle.xlContinuous  'Apply the line at the top of the Month
-Range("A13:A" & finalRow - 1).Interior.Color = RGB(226, 239, 218)  'Color the Invoiced Item columns GREEN
-Range("A13:A" & finalRow).Font.Bold = True  'Color the Invoiced Item columns BOLD
-Range("P13:P" & finalRow).Borders(xlEdgeRight).LineStyle = XlLineStyle.xlContinuous  'Right Border
-
-
-
 '******************************
-'***** Enter the Outstanding Date & UW Finance
+'***** Enter the Outstanding Date
 
 ' Delete the rows
-startRow = finalRow + 2
-lastOutstanding = Range("O" & Rows.Count).End(xlUp).row - 1
-Range("O" & startRow & ":P" & lastOutstanding).Delete shift:=xlUp
+outstandingStartRow = finalRow + rowGap
+'lastOutstanding = Range("B" & Rows.Count).End(xlUp).row
+'Range("B" & outstandingStartRow & ":C" & lastOutstanding).Delete shift:=xlUp
 
 ' Enter the Setup Value
-Range("O" & finalRow + 2) = "Total Revenue according to UW Finance:"
-Range("P" & finalRow + 2) = Range("O8")
-Range("O" & finalRow + 4) = "Outstanding"
-Range("O" & finalRow + 5) = "Reference"
-Range("P" & finalRow + 5) = "Date"
+'Range("B" & finalRow + 2) = "Total Revenue according to UW Finance:"
+'Range("C" & finalRow + 2) = Range("O8")
+Range("B" & outstandingStartRow) = "Outstanding"
+Range("B" & outstandingStartRow + 1) = "Reference"
+Range("C" & outstandingStartRow + 1) = "Date"
 
 ' Count
 outstandingCount = 1
@@ -615,82 +648,60 @@ outstandingCount = 1
 For EachTotal = 1 To OutstandingItem.Count Step 2
       
     ' Locate the entry of the data
-    rowStart = finalRow + 5 + outstandingCount
+    rowStart = outstandingStartRow + outstandingCount
        
     ' Enter the value
-    Range("O" & rowStart) = OutstandingItem(EachTotal)
-    Range("P" & rowStart) = OutstandingItem(EachTotal + 1)
+    Range("B" & rowStart) = OutstandingItem(EachTotal)
+    Range("C" & rowStart) = OutstandingItem(EachTotal + 1)
     outstandingCount = outstandingCount + 1
    
 Next EachTotal
 
-' The Cell Font Setup
-Range("O" & finalRow + 2).Font.Bold = True  ' Font Bold
-Range("P" & finalRow + 2).NumberFormat = "$#,##0.00"  ' Font Currency
-Range("P" & finalRow + 2).Font.Bold = True  ' Font Bold
-Range("O" & finalRow + 4).Font.Bold = True  ' Font Bold
-Range("O" & finalRow + 4).Font.Color = vbMagenta  ' Font color Pink
-Range("O" & finalRow + 5).Font.Bold = True  ' Font Bold
-Range("P" & finalRow + 5).Font.Bold = True  ' Font Bold
-  
 
 
 '******************************
-'***** Create the Summary CHART
+'***** Create the Summary CHART & UW Finance
 Dim invoicedSummary As New Collection
 
 ' Find the variables (Start & End Rows)
-startRow = finalRow + 3
-lastSummary = Range("B" & Rows.Count).End(xlUp).row - 1
-Range("B" & startRow & ":D" & lastSummary).Delete shift:=xlUp
+totalRevenueStartRow = finalRow + rowGap
+summaryStartRow = finalRow + rowGap + 2
+lastSummary = Range("M" & Rows.Count).End(xlUp).row
+'Range("M" & totalRevenueStartRow & ":O" & lastSummary).Delete shift:=xlUp
+'finalRow = Range("A" & Rows.Count).End(xlUp).row
 
+' Set Up Value
+Range("N" & totalRevenueStartRow) = "Total Revenue according to UW Finance:"
+Range("N" & totalRevenueStartRow).Font.Bold = True  ' Font Bold
+Range("O" & totalRevenueStartRow) = Range("O8")
+Range("O" & totalRevenueStartRow).NumberFormat = "$#,##0.00"
 
-' Find and enter the Summary Value
-For SummaryCount = 13 To finalRow - 2
+Range("M" & summaryStartRow) = "Summary"
+Range("N" & summaryStartRow) = "$"
+Range("O" & summaryStartRow) = "%"
+Range("M" & summaryStartRow).Font.Bold = True  ' Font Bold
+Range("N" & summaryStartRow).Font.Bold = True  ' Font Bold
+Range("O" & summaryStartRow).Font.Bold = True  ' Font Bold
 
-    ' Declare the Variables
-    ItemInvoiced = Range("A" & SummaryCount)
-    ItemTotal = Range("O" & SummaryCount)
-    ItemPercent = Range("P" & SummaryCount)
-    SummaryIndex = SummaryCount + BreakdownList.Count + 3
-    
-    ' Enter the value
-    Range("B" & SummaryIndex) = ItemInvoiced
-    Range("C" & SummaryIndex) = ItemTotal
-    Range("D" & SummaryIndex) = ItemPercent
-    
-Next SummaryCount
-
-
-' Create the chart for Summary
-Range("B" & SummaryIndex + 1) = "Total"  'Enter the Total
-Range("C" & SummaryIndex + 1) = "=SUM(C" & startRow & ":C" & SummaryIndex & ")"  ' Enter the Summary of the SUMS ($)
-Range("D" & SummaryIndex + 1) = "=SUM(D" & startRow & ":D" & SummaryIndex & ")"  ' Enter the Summary of the Percent (%)
-Range("D" & startRow & ":D" & SummaryIndex + 1).NumberFormat = "0.00%"  ' Apply the percentage
-Range("B" & SummaryIndex + 1 & ":D" & SummaryIndex + 1).Borders(xlEdgeTop).LineStyle = XlLineStyle.xlContinuous  'Top Border
-Range("B" & SummaryIndex + 1 & ":D" & SummaryIndex + 1).Borders(xlEdgeBottom).LineStyle = XlLineStyle.xlContinuous  'Bottom Border
-Range("B" & startRow & ":B" & SummaryIndex + 1).Borders(xlEdgeLeft).LineStyle = XlLineStyle.xlContinuous  'Left Border
-Range("D" & startRow & ":D" & SummaryIndex + 1).Borders(xlEdgeRight).LineStyle = XlLineStyle.xlContinuous  'Right Border
-'Range("B" & startRow & ":D" & startRow).Borders(xlEdgeTop).LineStyle = XlLineStyle.xlContinuous
 
 
 
 '****************** Create Chart ******************
 
 '** Move to the User Sheet
-Sheets("Service_Revenue_Breakdown").Select
+Sheets(sheetName).Select
 
 '** Delete Charts in the Sheet
-If Worksheets("Service_Revenue_Breakdown").ChartObjects.Count > 0 Then
-    Worksheets("Service_Revenue_Breakdown").ChartObjects.Delete
+If Worksheets(sheetName).ChartObjects.Count > 0 Then
+    Worksheets(sheetName).ChartObjects.Delete
 End If
 
 '** Find the List of Items
-fIndex = 12 + BreakdownList.Count - 1 ' final Index
+fIndex = invoicedStartRow + BreakdownList.Count - 1 ' final Index
 'MsgBox fIndex
 
 '** Create the Chart
-Set MyRange = Sheets("Service_Revenue_Breakdown").Range("A13:A" & fIndex & ",O13:P" & fIndex)
+Set MyRange = Sheets(sheetName).Range("A" & invoicedStartRow & ":A" & fIndex & ",P" & invoicedStartRow & ":P" & fIndex)
 ActiveSheet.Shapes.AddChart.Select
 ActiveChart.SetSourceData Source:=MyRange
 ActiveChart.ChartType = xl3DPie
@@ -702,8 +713,6 @@ End With
 
 ' Chart title
 With ActiveChart
-    '.Legend.Delete
-    '.ChartTitle.Delete
     .ChartTitle.Text = "Services " & YearFrom & " - " & YearTo
 End With
 
@@ -725,24 +734,56 @@ End With
 
 ' Size of the Pie
 With ActiveChart.PlotArea
-    .Width = 225
     .Height = 160
-    .Left = 100
-    .Top = 100
+    .Width = 275
+    .Top = 50
+    .Left = 50
 End With
 
-' Size of the Pie Chart
+' Location of the Pie Chart
 With ActiveChart.Parent
-     .Height = 200 ' resize
-     .Width = 380  ' resize
-     .Top = 270    ' reposition
-     .Left = 360   ' reposition
+     .Height = 220 ' resize
+     .Width = 430  ' resize
+     .Top = 270 + (20 * (BreakdownList.Count - 4))  ' reposition
+     .Left = 300   ' reposition
 End With
 
-' Select the Service_Revenue_Breakdown Sheet
-Sheets("Service_Revenue_Breakdown").Select
+
+
+' ************ Finishing Design
+' Creating a Borders
+lastOutstandingRow = Range("B" & Rows.Count).End(xlUp).row
+lastSummaryRow = Range("M" & Rows.Count).End(xlUp).row
+
+'If 31 > lastOutstandingRow And 31 > lastOutstandingRow Then
+'    finalSheetRow = 31
+'ElseIf lastOutstandingRow >= lastSummaryRow Then
+'    finalSheetRow = lastOutstandingRow
+'Else
+'    finalSheetRow = lastSummaryRow
+'End If
+finalSheetRow = 31
+
+' Invoice Chart (Phase I)
+Range("A" & finalRow + 1 & ":P" & finalRow + 1).BorderAround , ColorIndex:=1
+Range("A" & 11 & ":P" & finalRow + 1).BorderAround , ColorIndex:=1
+Range("A" & invoicedStartRow & ":P" & invoicedStartRow).Borders(xlEdgeBottom).LineStyle = xlNone
+Range("A" & invoicedStartRow & ":A" & finalRow).Interior.Color = sideColor
+Range("A" & finalRow + 1).Interior.Color = totalColor
+Range("A" & invoicedStartRow & ":A" & finalRow + 1).Font.Bold = True
+Range("C" & finalRow + 1 & ":O" & finalRow + 1).NumberFormat = "$#,##0.00" ' Make the cells a currency
+Range("A" & finalRow + 1 & ":P" & finalRow + 1).Font.Bold = True
+Range("B" & invoicedStartRow & ":P" & invoicedStartRow).Font.Bold = False
+
+' Oustanding Charts (Phase II)
+'Range("B" & outstandingStartRow & ":C" & lastOutstandingRow).BorderAround , ColorIndex:=1 ' Outstanding
+'Range("M" & summaryStartRow & ":O" & lastSummaryRow).BorderAround , ColorIndex:=1 ' Summary
+
+' Border the whole chart
+'Range("A" & 2 & ":P" & finalSheetRow).BorderAround , ColorIndex:=1
 
 End Sub
+
 
 
 
