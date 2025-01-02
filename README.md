@@ -22,7 +22,11 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 ## List of Content
 
 ### Orders
-* TBD
+* Entry of each request of Order
+
+* Notes
+    - Button in Top Left Corner will scroll to bottom of Table
+    - Merge Requests with several Parts. BUT No Rows can be merged in-between Column A-I (avoid dup)
 
 ### Usage
 * Tracks 12-Month periods usage/deatils of the Requests
