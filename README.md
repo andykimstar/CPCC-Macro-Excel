@@ -26,31 +26,31 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 
 ### Usage
 * Tracks 12-Month periods usage/deatils of the Requests
-  - Data from: Orders Tab
+  - Data From: Orders
 
 ### Media Requests
 * Tracks 12-Month periods in ( Number & Volumes ) of each Media Requests
-  - Data from: Orders Tab
+  - Data From: Orders
  
 ### Source Requests
 * Tracks 12-Month periods in ( Country & Affiliation ) of each Requests
-  - Data from: Orders Tab
+  - Data From: Orders
     
 ### Strains Ordered
 * Tracks any-entered periods in ( Total Count & Latest Order Date ) of each Strains Requests
-  - Data from: Orders Tab
+  - Data From: Orders
     
 ### Service Revenue Breakdown
 * Tracks 12-Month periods in Total Revenue of each CPCC Service Requests
-  - Data from: Orders Tab
+  - Data From: Orders
     
 ### Users List
 * Tracks any-entered periods oragnizes all Primary User of each Requests: (Primary User Details, Count of Request from Primary User, All associated Additional User for each Primary User)
-  - Data from: Orders Tab
+  - Data From: Orders
     
 ### Instituion List
 * Tracks any-entered periods organizes all Insititution of each Requests: (Primary User Details, Count of Request from Institution, All associated Primary/Additional User for each Insititution )
-  - Data from: User List Tab
+  - Data From: Orders
     
 
 
