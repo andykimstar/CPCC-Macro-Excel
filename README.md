@@ -25,26 +25,32 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * TBD
 
 ### Usage
-* Usage Tab tracks 12-Month periods usage/deatils of the Requests that include:
-  - ^# of requests, # of users, # & vol of Cultures
+* Usage Tab tracks 12-Month periods usage/deatils of the Requests
+  - Number of requests / Number of users / Number vol of Cultures
 
 ### Media Requests
-* Media Requests Tab tracks 12-Month periods in Number & Volumes of each Media Requests: (Type of Media (L), Number of Requests of Media)
-
+* Media Requests Tab tracks 12-Month periods in Number & Volumes of each Media Requests
+  - Type of Media (L) / Number of Requests of Media
+ 
 ### Source Requests
 * Source Requests Tab tracks 12-Month periods in Country & Affiliation of each Requests: (Aff of Request, Country of Request)
-
+  - Number of requests / Number of users / Number vol of Cultures
+    
 ### Strains Ordered
 * Strains Ordered Tab tracks any-entered periods in total count & latest Order Date of each Strains Requests: (Total count of requests for each Strain, Latest Date of Order for each Strain)
-
+  - Number of requests / Number of users / Number vol of Cultures
+    
 ### Service Revenue Breakdown
 * Service Revenue Breakdown Tab tracks 12-Month periods in total revenue of each CPCC service Requests: (Ordered Service Revenue Breakdown, Invoiced Service Revenue Breakdown)
-
+  - Number of requests / Number of users / Number vol of Cultures
+    
 ### Users List
 * User List Tab tracks any-entered periods oragnizes all Primary User of each Requests: (Primary User Details, Count of Request from Primary User, All associated Additional User for each Primary User)
-
+  - Number of requests / Number of users / Number vol of Cultures
+    
 ### Instituion List
 * Insitution List Tab tracks any-entered periods organizes all Insititution of each Requests: (Primary User Details, Count of Request from Institution, All associated Primary/Additional User for each Insititution )
-
+  - Number of requests / Number of users / Number vol of Cultures
+    
 
 
