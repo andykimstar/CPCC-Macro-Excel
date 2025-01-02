@@ -29,7 +29,6 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
   - Data From: Orders
 
 * Notes
-    - Data From: User List
     - Must be 12-month period date range
     - Only the 12-Month period Table is automated
     - Only the ( Yearly Table + Chart ) must be edited manually 
@@ -42,14 +41,11 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
   - Data From: Orders
 
 * Notes
-    - Data From: User List
     - Must be 12-month period date range
     - All tables are fully automated
     - Two Tables must have same list of Media
       
 ![MediaRequest](https://github.com/user-attachments/assets/0bb4c1b9-7984-4f71-8299-89e8cd14586c)
-
-
 
  
 ### Source Requests
@@ -57,7 +53,6 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
   - Data From: Orders
 
 * Notes
-    - Data From: User List
     - Must be 12-month period date range
     - All tables and pie chart are fully automated
     - More countries can be added/removed in the table (it's not a fixed list of countries)
@@ -70,7 +65,6 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
   - Data From: Orders
 
 * Notes
-    - Data From: User List
     - Enter any period date range
     - All tables are fully automated
     - Button in Top Left Corner will scroll to bottom of Table
@@ -82,7 +76,6 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
   - Data From: Orders
 
 * Notes
-    - Data From: User List
     - Must be 12-month period date range
     - All tables and pie charts are fully automated
     - Revenue is broken down into Ordered & Invoiced
@@ -92,16 +85,15 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
   - Data From: Orders
     
 * Notes
-    - Data From: User List
     - Enter any period date range
     - All tables are fully automated
     - All additional users associated to each primary user are listed
  
 ### Instituion List
 * Tracks any-entered periods organizes all Institution of each Requests: (Primary User Details, Count of Request from Institution, All associated Primary/Additional User for each Institution )
+  - Data From: User List
     
 * Notes
-    - Data From: User List
     - Enter any period date range
     - All tables are fully automated
     - Table is divided by Affiliation
