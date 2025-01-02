@@ -28,6 +28,8 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * Tracks 12-Month periods usage/deatils of the Requests
   - Data From: Orders
 
+![Usage](https://github.com/user-attachments/assets/47da791a-a315-4bd2-9473-6d002aaaf1cb)
+
 ### Media Requests
 * Tracks 12-Month periods in ( Number & Volumes ) of each Media Requests
   - Data From: Orders
