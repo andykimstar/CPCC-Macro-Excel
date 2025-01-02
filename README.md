@@ -25,15 +25,15 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * TBD
 
 ### Usage
-* Usage Tab tracks 12-Month periods usage/deatils of the Requests
+* Tracks 12-Month periods usage/deatils of the Requests
   - Data is coming from Orders Tab
 
 ### Media Requests
-* Media Requests Tab tracks 12-Month periods in Number and Volumes of each Media Requests
+* Tracks 12-Month periods in ( Number & Volumes ) of each Media Requests
   - Data from: Orders Tab
  
 ### Source Requests
-* Source Requests Tab tracks 12-Month periods in Country and Affiliation of each Requests
+* Tracks 12-Month periods in ( Country & Affiliation ) of each Requests
   - Data from: Orders Tab
     
 ### Strains Ordered
