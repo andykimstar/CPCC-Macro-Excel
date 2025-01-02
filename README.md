@@ -68,6 +68,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - Enter any period date range
     - All tables are fully automated
     - Button in Top Left Corner will scroll to bottom of Table
+    - More strains can be added/removed in the table (it's not a fixed list of strains)
     - If the Date Range include Dec/31/22 then Total Count of Requests from 1986 to 2022 will be included
  
     
@@ -79,6 +80,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - Must be 12-month period date range
     - All tables and pie charts are fully automated
     - Revenue is broken down into Ordered & Invoiced
+    - More services can be added/removed in the table (it's not a fixed list of service)
  
 ### Users List
 * Tracks any-entered periods oragnizes all Primary User of each Requests: (Primary User Details, Count of Request from Primary User, All associated Additional User for each Primary User)
