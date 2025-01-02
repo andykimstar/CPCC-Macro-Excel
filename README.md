@@ -28,9 +28,9 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * Tracks 12-Month periods usage/deatils of the Requests
   - Data From: Orders
 
-Features:
-- Only the 12-Month period Table is automated
-- Only the Yearly Table + Chart must be edited manually 
+* Features:
+    - Only the 12-Month period Table is automated
+    - Only the ( Yearly Table + Chart ) must be edited manually 
 
 ![Usage](https://github.com/user-attachments/assets/3842d6ae-e6d2-4f8b-a7ca-8112317afcef)
 
