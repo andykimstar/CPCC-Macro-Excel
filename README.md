@@ -26,31 +26,31 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 
 ### Usage
 * Usage Tab tracks 12-Month periods usage/deatils of the Requests
-  - Number of requests / Number of users / Number vol of Cultures
+  - Data is coming from Orders Tab
 
 ### Media Requests
-* Media Requests Tab tracks 12-Month periods in Number & Volumes of each Media Requests
-  - Type of Media (L) / Number of Requests of Media
+* Media Requests Tab tracks 12-Month periods in Number and Volumes of each Media Requests
+  - Data from: Orders Tab
  
 ### Source Requests
-* Source Requests Tab tracks 12-Month periods in Country & Affiliation of each Requests: (Aff of Request, Country of Request)
-  - Number of requests / Number of users / Number vol of Cultures
+* Source Requests Tab tracks 12-Month periods in Country and Affiliation of each Requests
+  - Data from: Orders Tab
     
 ### Strains Ordered
-* Strains Ordered Tab tracks any-entered periods in total count & latest Order Date of each Strains Requests: (Total count of requests for each Strain, Latest Date of Order for each Strain)
-  - Number of requests / Number of users / Number vol of Cultures
+* Strains Ordered Tab tracks any-entered periods in Total Count and Latest Order Date of each Strains Requests
+  - Data from: Orders Tab
     
 ### Service Revenue Breakdown
-* Service Revenue Breakdown Tab tracks 12-Month periods in total revenue of each CPCC service Requests: (Ordered Service Revenue Breakdown, Invoiced Service Revenue Breakdown)
-  - Number of requests / Number of users / Number vol of Cultures
+* Service Revenue Breakdown Tab tracks 12-Month periods in total revenue of each CPCC service Requests
+  - Data from: Orders Tab
     
 ### Users List
 * User List Tab tracks any-entered periods oragnizes all Primary User of each Requests: (Primary User Details, Count of Request from Primary User, All associated Additional User for each Primary User)
-  - Number of requests / Number of users / Number vol of Cultures
+  - Data from: Orders Tab
     
 ### Instituion List
 * Insitution List Tab tracks any-entered periods organizes all Insititution of each Requests: (Primary User Details, Count of Request from Institution, All associated Primary/Additional User for each Insititution )
-  - Number of requests / Number of users / Number vol of Cultures
+  - Data from: User List Tab
     
 
 
