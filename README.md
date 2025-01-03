@@ -137,8 +137,10 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 1. Make a copy of the Excel file and re-name
 2. Open the copied Excel File
 3. Go to "FILE" Tab => "INFO" => "Protect Workbook" and select "Always Open Read-Only"
-4. Go to "DEVELOPER" Tab => "Macro Security" and select "Disable VBA macros without notification" + un-select all check-box
+4. Go to "DEVELOPER" Tab => "Macro Security" => "Macro Settings" and select "Disable VBA macros without notification" + un-select all check-box
 
+Step 4. 
+![image](https://github.com/user-attachments/assets/ff1ee651-0b1b-48dc-85a2-368a6110293d)
 
 https://github.com/user-attachments/assets/c5f10a6c-fb46-418a-ae39-4c7729128172
 
