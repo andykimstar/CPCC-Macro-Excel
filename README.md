@@ -40,7 +40,8 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - Only the 12-Month period Table is automated
     - Only the ( Yearly Table + Chart ) must be edited manually 
 
-![Usage](https://github.com/user-attachments/assets/3842d6ae-e6d2-4f8b-a7ca-8112317afcef)
+![Usage](https://github.com/user-attachments/assets/fb2e8faa-39e5-490d-8f63-d66957a65a0d)
+
 
 
 ### Media Requests
@@ -52,7 +53,8 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - All tables are fully automated
     - Two Tables must have same list of Media
       
-![MediaRequest](https://github.com/user-attachments/assets/0bb4c1b9-7984-4f71-8299-89e8cd14586c)
+![MediaRequest](https://github.com/user-attachments/assets/72d1240c-ad1b-4b26-b0fe-b4b3c8dd2dad)
+
 
  
 ### Source Requests
@@ -64,7 +66,8 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - All tables and pie chart are fully automated
     - More countries can be added/removed in the table (it's not a fixed list of countries)
  
-![SourceRequest](https://github.com/user-attachments/assets/8ad132dd-9b1e-4b5a-a52d-00e482cb7451)
+![SourceRequest](https://github.com/user-attachments/assets/901f1124-89c7-4d71-9ca2-6281006fa9f1)
+
 
     
 ### Strains Ordered
@@ -78,8 +81,11 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - More strains can be added/removed in the table (it's not a fixed list of strains)
     - If the Date Range include Dec/31/22 then Total Count of Requests from 1986 to 2022 will be included
     - Select the Column then CTRL+Shift+L to Filter the Columns
- 
-    
+
+![StrainsOrdered](https://github.com/user-attachments/assets/221deb48-9279-4d46-94e4-0fc046a202ea)
+
+
+
 ### Service Revenue Breakdown
 * Tracks 12-Month periods in Total Revenue of each CPCC Service Requests
   - data coming-from: **_Orders Tab_**
@@ -89,7 +95,11 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - All tables and pie charts are fully automated
     - Revenue is broken down into Ordered & Invoiced
     - More services can be added/removed in the table (it's not a fixed list of service)
- 
+
+![ServiceRevenue](https://github.com/user-attachments/assets/f0c53022-d301-42b6-8ba7-7ff427f8089c)
+
+
+
 ### Users List
 * Tracks any-entered periods oragnizes all Primary User of each Requests: (Primary User Details, Count of Request from Primary User, All associated Additional User for each Primary User)
   - data coming-from: **_Orders Tab_**
@@ -99,6 +109,10 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - All tables are fully automated
     - All additional users associated to each primary user are listed
     - Select the Column then CTRL+Shift+L to Filter the Columns
+ 
+![UserList](https://github.com/user-attachments/assets/def245ea-4db0-4fb8-ab21-681343314463)
+
+
  
 ### Instituion List
 * Tracks any-entered periods organizes all Institution of each Requests: (Primary User Details, Count of Request from Institution, All associated Primary/Additional User for each Institution )
@@ -110,4 +124,8 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     - Table is divided by Affiliation
     - All users associated to each institution are listed
     - Select the Zone (col/row) then CTRL+Shift+L to Filter the Columns
+ 
+![InstitutionList](https://github.com/user-attachments/assets/0b055fc3-a10f-488d-91a4-4a231abb63f1)
+
+
 
