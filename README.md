@@ -14,8 +14,7 @@ It intends to organize the data, construct variables, and run statistical analys
 
 This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
 
- 
-[Link to the recording](https://youtu.be/qNkoCGgKEuw)).
+I have recorded the overview of the content which can be find here: [Go to Demo](https://youtu.be/qNkoCGgKEuw).
 
 
 
