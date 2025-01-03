@@ -1,41 +1,36 @@
-Sub Media_Request()
+Sub Media_Requests()
 
 '***************************************** USER EDITS *********************************************
+' Last Edit: 2025-01-02
 
 ' Sheet Name
 fromsheetName = "Orders"
-sheetName = "Media Request2"
+sheetName = "Media Requests"
 
-' Dates row
+' Dates rows
 DateStartRow = "R15"
 DateEndRow = "R16"
 
 ' Set the Columns in the 'Order'
-newClientColumn = "K"
-culColumn = "L"
-strColumn = "M"
-mlCulColumn = "N"
-mlStrColumn = "O"
-mlConColumn = "P"
+'mediaNumColumn = "J"  'New
+mediaColumn = "O"
+LmediaColumn = "P"
+conceColumn = "Q"  'New
+mlConColumn = "R"
 
-' Set the Rows in the 'Usage'
-requestUsage = 6
-newCliUsage = 7
-culUsage = 8
-strUsage = 9
-volCulUsage = 10
-volMedUsage = 11
-
+' Start Row
+StartRow = 7
+countColumn = "B"
 '****************************************************************************************************
 
 
-'************************************** Usage: Find Years *******************************************
+'************************************** Media Request: Find Years *******************************************
 
 'Dim Year As String
 Dim DateFrom As String
 Dim DateTo As String
 
-'** Move to the User Sheet
+'** Move to the Media Request Sheet
 Sheets(sheetName).Select
 
 ' Collect the entered From & To Date
@@ -62,167 +57,179 @@ ToString = MonthName(ToMonth, True)
 Sheets(fromsheetName).Select
 
 '** Count the number of rows
-No_Of_Rows = Range("A" & Rows.Count).End(xlUp).row
+No_Of_Rows = Range(countColumn & Rows.Count).End(xlUp).row
+'MsgBox No_Of_Rows
 Count = 0
 
 '** Collect data for the selected Year
-Dim numRequests As New Collection
-Dim newClientList As New Collection
-Dim numCulList As New Collection
-Dim numStraList As New Collection
-Dim mlCulList As New Collection
-Dim mlMedList As New Collection
-Dim mlConList As New Collection
-
-' Collection of each requests
-Dim order_Media As New Collection
-Dim type_Media As New Collection
+Dim numMediaList As New Collection
+Dim numConcList As New Collection
+Dim LMediaList As New Collection
+Dim mlConcList As New Collection
 
 ' Loop Through to collect data for the fisical year
-For row = No_Of_Rows To 3 Step -1
+For row = No_Of_Rows To 2 Step -1
     Set Cell = Range("A" & row)
     cellDate = Format(Cell.Value, "yyyy-mm-dd")
     
     ' Assigning variables
-    Set new_Client = Range(newClientColumn & row)
-    Set num_Cultures = Range(culColumn & row)
-    Set num_Strain = Range(strColumn & row)
-    Set ml_Culture = Range(mlCulColumn & row)
-    Set ml_Medium = Range(mlStrColumn & row)
+    Set num_Media = Range(mediaColumn & row)
+    Set l_Media = Range(LmediaColumn & row)
+    Set num_Concentrate = Range(conceColumn & row)
     Set ml_Concentrate = Range(mlConColumn & row)
     
-     ' Find the Media
-    Set media = Range("R" & row)
+    ' Find the Media
+    'Set Media = Range("M" & row)
     
     ' Enter only if its meets the condition of the fisical year
     If cellDate >= DateFrom And cellDate <= DateTo Then
     
-        ' Each Usage
-        If IsDate(cellDate) And Not IsEmpty(cellDate) Then
-            numRequests.Add cellDate
+        '** # of Media
+        If Not IsNumeric(num_Media) And Not IsEmpty(num_Media) And num_Media <> "-" Then
+        
+            num_MediaArr = Split(num_Media, ", ")
+
+            For Each each_media In num_MediaArr
+                numMediaList.Add cellDate
+                numMediaList.Add each_media
+                'MsgBox (cellDate)
+                'MsgBox (each_media)
+            Next
         End If
         
-        If new_Client = "yes" And Not IsEmpty(new_Client) Then
-            newClientList.Add cellDate
-        End If
+        '** # of Concentrate
+        If Not IsNumeric(num_Concentrate) And Not IsEmpty(num_Concentrate) And num_Concentrate <> "-" Then
         
-        '** # of Cultures
-        If IsNumeric(num_Cultures) And Not IsEmpty(num_Cultures) Then
-            numCulList.Add cellDate
-            numCulList.Add num_Cultures
-        End If
-        
-        '** # of Strain
-        If IsNumeric(num_Strain) And Not IsEmpty(num_Strain) Then
-            numStraList.Add cellDate
-            numStraList.Add num_Strain
+            num_ConcArr = Split(num_Concentrate, ", ")
+            For Each each_conc In num_ConcArr
+                numConcList.Add cellDate
+                numConcList.Add each_conc
+            Next
         End If
          
-        '** mL of Cultures
-        If IsNumeric(ml_Culture) And Not IsEmpty(ml_Culture) Then
-            mlCulList.Add cellDate
-            mlCulList.Add ml_Culture
+        '** L of Media
+        If Not IsEmpty(l_Media) And l_Media <> 0 And l_Media <> "-" Then
+            
+            L_MediaArr = Split(l_Media, ", ")
+            For Each each_media_l In L_MediaArr
+                LMediaList.Add cellDate
+                LMediaList.Add each_media_l
+                'MsgBox (cellDate)
+                'MsgBox (each_media_l)
+            Next
         End If
          
-        '** L of Medium
-        If IsNumeric(ml_Medium) And Not IsEmpty(ml_Medium) Then
-            mlMedList.Add cellDate
-            mlMedList.Add ml_Medium
-        End If
-        
         '** mL of Concentrate
-        If IsNumeric(ml_Concentrate) And Not IsEmpty(ml_Concentrate) Then
-            mlConList.Add cellDate
-            mlConList.Add ml_Concentrate
-        End If
-        
-        ' Only collect data if its a matching month
-        If Not IsEmpty(media) Then
-            'Add the country data into the monthly list
-            order_Media.Add cellDate
-            order_Media.Add media
-            'MsgBox media
-        End If
-        
-         ' Only collect data if its a matching month
-        If Not IsEmpty(media) Then
-            'Add the country data into the monthly list
-            type_Media.Add cellDate
-            type_Media.Add media
-            type_Media.Add mlMedList
-            type_Media.Add mlConList
-            'MsgBox media
+        If Not IsEmpty(ml_Concentrate) And ml_Concentrate <> 0 And ml_Concentrate <> "-" Then
+            
+            ml_ConcArr = Split(ml_Concentrate, ", ")
+            For Each each_conc_ml In ml_ConcArr
+                mlConcList.Add cellDate
+                mlConcList.Add each_conc_ml
+            Next
         End If
         
     End If
+    
 Next row
 
 
-'******************************* Type of Media
+' ERROR Notification: Numbers dont add up between # of Media & L of Media
+If numMediaList.Count <> LMediaList.Count Then
+
+    MsgBox ("Number of Media (" & numMediaList.Count & ") & L of medium (" & LMediaList.Count & ") do not add up properly")
+            
+End If
+
+' ERROR Notification: Numbers dont add up between # of Concentrate & mL of Concentrate
+If numConcList.Count <> mlConcList.Count Then
+
+    MsgBox ("Number of Concentrate (" & numConcList.Count & ") & mL of Concentrate (" & mlConcList.Count & ") do not add up properly")
+            
+End If
+
+'***********
+' Collection of each requests
+Dim type_Media As New Collection
+Dim order_Media As New Collection
+Dim order_Media_Litre As Double
+
+' Create a Collection of Media
+For i = 2 To numMediaList.Count Step 2
+    order_Media.Add numMediaList(i - 1)
+    order_Media.Add numMediaList(i)
+    order_Media.Add LMediaList(i)
+Next
+
+' Create a Collection of Concentrate
+For i = 2 To numConcList.Count Step 2
+    order_Media.Add numConcList(i - 1)
+    order_Media.Add numConcList(i)
+    order_Media_Litre = mlConcList(i) / 1000  ' ml division
+    order_Media.Add order_Media_Litre
+Next
+
+
+'******************************* 12 Month Data Collection *******************************
 
 ' Collection of each requests
-Dim year_Media As New Collection
-Dim monthly_Media As New Collection
+Dim year_MediaRequest As New Collection
+Dim year_MediaLitre As New Collection
+Dim monthly_MediaRequest As New Collection
+Dim monthly_MediaLitre As New Collection
 DateNext = DateFrom
-
 
 ' Count up the 12 month
 For n = 1 To 12
 
     ' Count through each order data
-    For i = 1 To order_Media.Count Step 2
+    For i = 1 To order_Media.Count Step 3
 
-        'Each CA Request Date
-        mediaTypeDate = order_Media(i)
-        mediaTypeRequest = order_Media(i + 1)
-                
+        mediaDate = order_Media(i)
+        mediaRequest = order_Media(i + 1) 'Request
+        mediaLitre = order_Media(i + 2) 'Litre
+        
         ' Only collect data if its a matching month
-        If Month(DateNext) = Month(mediaTypeDate) And Not IsEmpty(mediaTypeRequest) Then
+        If Month(DateNext) = Month(mediaDate) And Not IsEmpty(mediaRequest) Then
 
-            'Add the country data into the monthly list
-            monthly_Media.Add mediaTypeRequest
-            'MsgBox Media
+            'Add Media Request Monthly
+            monthly_MediaRequest.Add mediaRequest
+            
+            'Add Media Litre Monthly
+            monthly_MediaLitre.Add mediaRequest
+            monthly_MediaLitre.Add mediaLitre
         End If
     
     Next i
     
-    'MsgBox monthly_Media.Count
+    'MsgBox monthly_MediaType.Count
+    'MsgBox monthly_MediaLitre.Count
+
+    ' Create a 'Year List' of the Months
+    year_MediaRequest.Add monthly_MediaRequest
+    year_MediaLitre.Add monthly_MediaLitre
     
-    Set monthly_MediaList = New Collection ' Reset the Monthly Request List
-    For ItemIndex = 1 To monthly_Media.Count Step 1
-    
-        Item = monthly_Media(ItemIndex)
-        'MsgBox Item
-        Result = Split(monthly_Media(ItemIndex), ", ")
-        'MsgBox Result.Count
-        For Each itemName In Result
-            'MsgBox itemName
-            monthly_MediaList.Add itemName
-        Next
-    
-    Next ItemIndex
-    
-    'MsgBox monthly_MediaList.Count
-    ' Add the Monthly Request List into the year list
-    year_Media.Add monthly_MediaList
-    'MsgBox monthly_Media.Count
-    
-    ' Set deafult values
-    Set monthly_MediaList = New Collection ' Reset the Monthly Request List
-    Set monthly_Media = New Collection ' Reset the Monthly Request List
+    'Reset the month collection
+    Set monthly_MediaRequest = New Collection ' Reset the Monthly Request List
+    Set monthly_MediaLitre = New Collection ' Reset the Monthly Litre List
     DateNext = DateAdd("m", 1, DateNext) ' Find the next month
 
 
 Next n
 
 
+' ******************************* Media Request Sheet *******************************
+
 '** Find the List of the Media
 
-'Declare the Country Collection
+'** Move to the Media Request Sheet
+Sheets(sheetName).Select
+
+'Declare the Media List Collection
 Dim MediaList As New Collection
 
 ' ** Determine Whether the year exists
-i = distance_Row
+i = StartRow
 Do While Cells(i, 1).Value <> "Total"
     'your code here
     mediaType = Cells(i, 1).Value
@@ -231,429 +238,60 @@ Do While Cells(i, 1).Value <> "Total"
     i = i + 1
 Loop
 
-
 ' Find the distance between the two table
-distance = MediaList.Count + 3
-startDistanceType = distance_Row + distance + 1
-'MsgBox distance
-
+distance = StartRow + MediaList.Count + 4
 
 '**** Begin Counting and entering request of each media per month
-Dim Counter As Integer
-
-'***** FirstMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-    'MsgBox media
-    
-     ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 2) = "=SUM(B" & startDistanceType & ":B" & col & ")"
-    Else
-    
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(1).Count
-    
-            ' Count if the media matches
-            If media = year_Media(1)(i) Then
-                Counter = Counter + 1
-            End If
-        Next i
-        'MsgBox Counter
-    
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 2) = Counter
-    
-Next EachMedia
+Dim countRequest As Integer
+Dim countLitre As Double
 
 
-'***** SecondMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
+' Loop Through Months
+For k = 2 To 13
 
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 3) = "=SUM(C" & startDistanceType & ":C" & col & ")"
-    Else
+    ' Loop Through list of Media
+    For EachMedia = 1 To MediaList.Count
     
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(2).Count
-    
-            ' Count if the media matches
-            If media = year_Media(2)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
+        'Set default values
+        media = MediaList(EachMedia)
+        countRequest = 0
+        countLitre = 0
+        rowNumLitre = StartRow + EachMedia - 1
+        rowNumRequest = distance + EachMedia - 1
+        'MsgBox media
         
-    End If
     
-    ' Locate the entry of the data
-    'MsgBox media
-    Cells(col, 3) = Counter
-    
-Next EachMedia
-
-
-'***** ThirdMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 4) = "=SUM(D" & startDistanceType & ":D" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(3).Count
-    
-            ' Count if the media matches
-            If media = year_Media(3)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
-
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 4) = Counter
-    
-Next EachMedia
-
-
-
-'***** FourthMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 5) = "=SUM(E" & startDistanceType & ":E" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(4).Count
-    
-            ' Count if the media matches
-            If media = year_Media(4)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
+         ' Loop through the list of media in each given month
+         For i = 1 To year_MediaLitre(k - 1).Count Step 2
+     
+             ' Count if the media matches
+             If media = year_MediaLitre(k - 1)(i) Then
+                 countRequest = countRequest + 1  ' Media Request
+                 countLitre = countLitre + year_MediaLitre(k - 1)(i + 1)  ' Media Litre
+             End If
+         Next i
         
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 5) = Counter
-    
-Next EachMedia
-
-
-'***** FifthMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 6) = "=SUM(F" & startDistanceType & ":F" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(5).Count
-    
-            ' Count if the media matches
-            If media = year_Media(5)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
+        ' Locate the entry of the data
+        Cells(rowNumLitre, k) = countLitre
+        Cells(rowNumRequest, k) = countRequest
         
-    End If
+    Next EachMedia
     
-    ' Locate the entry of the data
-    Cells(col, 6) = Counter
-    
-Next EachMedia
-
-
-'***** SixthMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 7) = "=SUM(G" & startDistanceType & ":G" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(6).Count
-    
-            ' Count if the media matches
-            If media = year_Media(6)(i) Then
-                Counter = Counter + 1
-            End If
-        Next i
-        
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 7) = Counter
-    
-Next EachMedia
-
-
-'***** SeventhMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 8) = "=SUM(H" & startDistanceType & ":H" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(7).Count
-    
-            ' Count if the media matches
-            If media = year_Media(7)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
-        
-    End If
-
-    ' Locate the entry of the data
-    Cells(col, 8) = Counter
-    
-Next EachMedia
-
-
-'***** EigthMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 9) = "=SUM(I" & startDistanceType & ":I" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(8).Count
-    
-            ' Count if the media matches
-            If media = year_Media(8)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
-        
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 9) = Counter
-    
-Next EachMedia
-
-
-'***** NinethMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 10) = "=SUM(J" & startDistanceType & ":J" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(9).Count
-    
-            ' Count if the media matches
-            If media = year_Media(9)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
-        
-    End If
-    
-    ' Locate the entry of the data
-     Cells(col, 10) = Counter
-    
-Next EachMedia
-
-
-'***** TenthMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 11) = "=SUM(K" & startDistanceType & ":K" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(10).Count
-    
-            ' Count if the media matches
-            If media = year_Media(10)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
-        
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 11) = Counter
-    
-Next EachMedia
-
-
-'***** EleventhMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 12) = "=SUM(L" & startDistanceType & ":L" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(11).Count
-    
-            ' Count if the media matches
-            If media = year_Media(11)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
-        
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 12) = Counter
-    
-Next EachMedia
-
-
-'***** TwelvethMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count
-
-    'Set default values
-    media = MediaList(EachMedia)
-    Counter = 0
-    col = distance_Row + distance + EachMedia
-    'MsgBox col
-      
-    ' If its the Last Row add the SUMMATION formula
-    If EachMedia = MediaList.Count Then
-          Cells(col + 1, 13) = "=SUM(M" & startDistanceType & ":M" & col & ")"
-    Else
-    
-    ' If it is not than continue to add the values
-        ' Loop through the list of media in each given month
-        For i = 1 To year_Media(12).Count
-    
-            ' Count if the media matches
-            If media = year_Media(12)(i) Then
-                Counter = Counter + 1
-                
-            End If
-        Next i
-        
-    End If
-    
-    ' Locate the entry of the data
-    Cells(col, 13) = Counter
-    
-Next EachMedia
+Next k
 
 
 
+'SUMMATION formula
+sumFormulaRowLitre = StartRow + MediaList.Count
+sumFormulaRowReque = StartRow + MediaList.Count + 4 + MediaList.Count
 
-'***** TOTALMonth_Request
-' Loop through the list of Media
-For EachMedia = 1 To MediaList.Count + 1
+' Loop Through Months
+For k = 2 To 13
 
-    'Set default values
-    col = distance_Row + distance + EachMedia
-      
-    ' If its the Last Row add the SUMMATION formula
-    Cells(col, 14) = "=SUM(B" & col & ":M" & col & ")"
+    'If its the Last Row add the SUMMATION formula
+    Cells(sumFormulaRowLitre, k) = "=SUM(" & Cells(StartRow, k).Address(False, False) & ":" & Cells(StartRow + MediaList.Count - 1, k).Address(False, False) & ")"
+    Cells(sumFormulaRowReque, k) = "=SUM(" & Cells(distance, k).Address(False, False) & ":" & Cells(distance + MediaList.Count - 1, k).Address(False, False) & ")"
     
-Next EachMedia
-
+Next k
 
 End Sub
-
-
