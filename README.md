@@ -24,6 +24,10 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 
 ## List of Content
 
+### Watch out
+* Allow Trust notification - Click
+* Colors of the tab for the separation between automation/non-automation & merge/non-merge
+
 ### Orders
 * Entry of each request of Order
 
