@@ -16,7 +16,8 @@ It eliminates the manual work of collection as the code intends to clean data, c
 This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
 
 ## Design
-![image](https://github.com/andykimstar/CPCC-Excel-Automation-Tool/assets/113536228/d2acc607-bdfe-4422-ac5c-c38f5962a732)
+![CPCC-Design](https://github.com/user-attachments/assets/2d1319d7-8fd6-4aba-9712-16ec8978b1a2)
+
 
 
 
