@@ -2,8 +2,7 @@
 
 ## Description
 In collaboration with  [Canadian Phycological Culture Centre](https://uwaterloo.ca/canadian-phycological-culture-centre/about) (CPCC) Biology Lab at University of Wateroo, a Macro Excel file was created to automate the data processing and collection to evaluate the performance of the CPCC Biology Lab.
-The project was initiated & led by myself in the product from design, development, testing and management.
-It was initiated by myself with suggestion and presention to the Professor in effort to help the tracking of the Sales & Customers of the Lab. 
+The project was initiated & led from the product from design, development, testing and management.
 
 Contact: andykimstar@gmail.com
 
