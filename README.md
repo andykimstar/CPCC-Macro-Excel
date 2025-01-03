@@ -130,3 +130,17 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 
 
 
+## How to..
+
+### How to save a copy of a file
+
+1. Make a copy of the Excel file and re-name
+2. Open the copied Excel File
+3. Go to "FILE" Tab => "INFO" => "Protect Workbook" and select "Always Open Read-Only"
+4. Go to "DEVELOPER" Tab => "Macro Security" and select "Disable VBA macros without notification" + un-select all check-box
+
+
+https://github.com/user-attachments/assets/c5f10a6c-fb46-418a-ae39-4c7729128172
+
+
+
