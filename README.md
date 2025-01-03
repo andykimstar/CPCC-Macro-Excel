@@ -34,7 +34,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * Tracks 12-Month periods usage/deatils of the Requests
   - Data From: Orders
 
-* Notes
+* *Notes*
     - Must be 12-month period date range
     - Only the 12-Month period Table is automated
     - Only the ( Yearly Table + Chart ) must be edited manually 
@@ -46,7 +46,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * Tracks 12-Month periods in ( Number & Volumes ) of each Media Requests
   - Data From: Orders
 
-* Notes
+* *Notes*
     - Must be 12-month period date range
     - All tables are fully automated
     - Two Tables must have same list of Media
@@ -58,7 +58,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * Tracks 12-Month periods in ( Country & Affiliation ) of each Requests
   - Data From: Orders
 
-* Notes
+* *Notes*
     - Must be 12-month period date range
     - All tables and pie chart are fully automated
     - More countries can be added/removed in the table (it's not a fixed list of countries)
@@ -70,19 +70,20 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * Tracks any-entered periods in ( Total Count & Latest Order Date ) of each Strains Requests
   - Data From: Orders
 
-* Notes
+* *Notes*
     - Enter any period date range
     - All tables are fully automated
     - Button in Top Left Corner will scroll to bottom of Table
     - More strains can be added/removed in the table (it's not a fixed list of strains)
     - If the Date Range include Dec/31/22 then Total Count of Requests from 1986 to 2022 will be included
+    - Select the Column then CTRL+Shift+L to Filter the Columns
  
     
 ### Service Revenue Breakdown
 * Tracks 12-Month periods in Total Revenue of each CPCC Service Requests
   - Data From: Orders
 
-* Notes
+* *Notes*
     - Must be 12-month period date range
     - All tables and pie charts are fully automated
     - Revenue is broken down into Ordered & Invoiced
@@ -92,18 +93,20 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 * Tracks any-entered periods oragnizes all Primary User of each Requests: (Primary User Details, Count of Request from Primary User, All associated Additional User for each Primary User)
   - Data From: Orders
     
-* Notes
+* *Notes*
     - Enter any period date range
     - All tables are fully automated
     - All additional users associated to each primary user are listed
+    - Select the Column then CTRL+Shift+L to Filter the Columns
  
 ### Instituion List
 * Tracks any-entered periods organizes all Institution of each Requests: (Primary User Details, Count of Request from Institution, All associated Primary/Additional User for each Institution )
   - Data From: User List
     
-* Notes
+* *Notes*
     - Enter any period date range
     - All tables are fully automated
     - Table is divided by Affiliation
     - All users associated to each institution are listed
+    - Select the Zone (col/row) then CTRL+Shift+L to Filter the Columns
 
