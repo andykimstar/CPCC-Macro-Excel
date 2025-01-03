@@ -19,6 +19,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 ![image](https://github.com/andykimstar/CPCC-Excel-Automation-Tool/assets/113536228/d2acc607-bdfe-4422-ac5c-c38f5962a732)
 
 
+
 ## List of Content
 
 ### Orders
