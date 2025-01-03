@@ -8,16 +8,17 @@ fromsheetName = "Orders"
 sheetName = "Usage"
 
 ' Dates row
-DateStartRow = "R15"
-DateEndRow = "R16"
+DateStartRow = "R14"
+DateEndRow = "R15"
 
-' Set the Columns in the 'Order'
-newClientColumn = "K"
-culColumn = "L"
-strColumn = "M"
-mlCulColumn = "N"
-mlStrColumn = "O"
-mlConColumn = "P"
+' ## Set the Columns in the 'Order' ##
+newClientColumn = "J"
+strColumn = "L"
+mlCulColumn = "M"
+culColumn = "N"
+mlMedColumn = "P"
+mlConColumn = "R"
+mergedColumn = "AB" 'Total Cost $CAD
 
 ' Set the Rows in the 'Usage'
 requestUsage = 6
@@ -26,6 +27,7 @@ culUsage = 8
 strUsage = 9
 volCulUsage = 10
 volMedUsage = 11
+volConcUsage = 12
 
 '****************************************************************************************************
 
@@ -76,22 +78,24 @@ Dim mlCulList As New Collection
 Dim mlMedList As New Collection
 Dim mlConList As New Collection
 
-' Collection of each requests
-Dim order_Media As New Collection
-Dim type_Media As New Collection
+' Loop Through to collect data for the fisical Year
+For rownum = No_Of_Rows To 3 Step -1
 
-' Loop Through to collect data for the fisical year
-For row = No_Of_Rows To 3 Step -1
+    Set ref = Range("A" & rownum)
+    row = ref.row
+    
     Set Cell = Range("A" & row)
     cellDate = Format(Cell.Value, "yyyy-mm-dd")
+    'MsgBox cellDate
     
     ' Assigning variables
     Set new_Client = Range(newClientColumn & row)
     Set num_Cultures = Range(culColumn & row)
     Set num_Strain = Range(strColumn & row)
     Set ml_Culture = Range(mlCulColumn & row)
-    Set ml_Medium = Range(mlStrColumn & row)
+    Set ml_Medium = Range(mlMedColumn & row)
     Set ml_Concentrate = Range(mlConColumn & row)
+    Set merged = Range(mergedColumn & row)
     
      ' Find the Media
     Set media = Range("R" & row)
@@ -101,7 +105,9 @@ For row = No_Of_Rows To 3 Step -1
     
         ' Each Usage
         If IsDate(cellDate) And Not IsEmpty(cellDate) Then
-            numRequests.Add cellDate
+            If Not IsEmpty(merged) Then
+                numRequests.Add cellDate
+            End If
         End If
         
         If new_Client = "yes" And Not IsEmpty(new_Client) Then
@@ -121,43 +127,38 @@ For row = No_Of_Rows To 3 Step -1
         End If
          
         '** mL of Cultures
-        If IsNumeric(ml_Culture) And Not IsEmpty(ml_Culture) Then
-            mlCulList.Add cellDate
-            mlCulList.Add ml_Culture
+        If ml_Culture <> "-" And Not IsEmpty(ml_Culture) Or IsNumeric(ml_Culture) Then
+        
+            arr = Split(ml_Culture, ", ")
+            For Each each_item In arr
+                mlCulList.Add cellDate
+                mlCulList.Add each_item
+            Next
         End If
          
         '** L of Medium
-        If IsNumeric(ml_Medium) And Not IsEmpty(ml_Medium) Then
-            mlMedList.Add cellDate
-            mlMedList.Add ml_Medium
+        If ml_Medium <> "-" And Not IsEmpty(ml_Medium) Or IsNumeric(ml_Medium) Then
+        
+            arr = Split(ml_Medium, ", ")
+            For Each each_item In arr
+                mlMedList.Add cellDate
+                mlMedList.Add each_item
+            Next
         End If
         
         '** mL of Concentrate
-        If IsNumeric(ml_Concentrate) And Not IsEmpty(ml_Concentrate) Then
-            mlConList.Add cellDate
-            mlConList.Add ml_Concentrate
+        If ml_Concentrate <> "-" And Not IsEmpty(ml_Concentrate) Or IsNumeric(ml_Concentrate) Then
+        
+            arr = Split(ml_Concentrate, ", ")
+            For Each each_item In arr
+                mlConList.Add cellDate
+                mlConList.Add each_item
+            Next
         End If
         
-        ' Only collect data if its a matching month
-        If Not IsEmpty(media) Then
-            'Add the country data into the monthly list
-            order_Media.Add cellDate
-            order_Media.Add media
-            'MsgBox media
-        End If
-        
-         ' Only collect data if its a matching month
-        If Not IsEmpty(media) Then
-            'Add the country data into the monthly list
-            type_Media.Add cellDate
-            type_Media.Add media
-            type_Media.Add mlMedList
-            type_Media.Add mlConList
-            'MsgBox media
-        End If
         
     End If
-Next row
+Next rownum
 
 
 '**************************************** Usage: Data Input ***********************************************
@@ -218,10 +219,10 @@ For n = 1 To 12
     ' CACount refreshes to zero
     newClientCount = 0
 
-    ' Count through the CA Dates
+    ' Count through the Dates
     For i = 1 To newClientList.Count
     
-        'Each CA Request Date
+        'Each Request Date
         NewClientDate = newClientList(i)
 
         ' If the Month matches add
@@ -328,7 +329,7 @@ For n = 1 To 12
     
         'Each CA Request Date
         volCultureDate = mlCulList(i)
-        volCultureTotal = mlCulList(i + 1)
+        volCultureTotal = mlCulList(i + 1) / 1000
 
         ' If the Month matches add
         If Month(DateNext) = Month(volCultureDate) Then
@@ -383,5 +384,41 @@ For n = 1 To 12
 
 Next n
 
-End Sub
 
+
+'*** vol Total Concentrate
+'**Number of Conc per Month
+' Find the Date to start from
+DateNext = DateFrom
+
+' Count up the 12 month
+For n = 1 To 12
+
+    ' mlMediumCount refreshes to zero
+    mlConcCount = 0
+
+    ' Count through the CA Dates
+    For i = 1 To mlConList.Count Step 2
+    
+        'Each CA Request Date
+        concDate = mlConList(i)
+        concRequest = mlConList(i + 1) / 1000
+
+        ' If the Month matches add
+        If Month(DateNext) = Month(concDate) Then
+            mlConcCount = mlConcCount + concRequest
+        End If
+    
+    Next i
+    
+    ' Locate the entry of the data
+    Index = n + 1
+    Cells(volConcUsage, Index) = mlConcCount
+    
+    ' Find the next month
+    DateNext = DateAdd("m", 1, DateNext)
+    'MsgBox Month(DateNext)
+
+Next n
+
+End Sub
