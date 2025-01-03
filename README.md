@@ -26,13 +26,13 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 ### Orders
 * Entry of each request of Order
 
-* Notes
+* *Notes*
     - Button in Top Left Corner will scroll to bottom of Table
     - Merge Requests with several Parts. BUT No Rows can be merged in-between Column A-I (avoid dup)
 
 ### Usage
 * Tracks 12-Month periods usage/deatils of the Requests
-  - Data coming-from: **_Orders Tab_**
+  - data coming-from: **_Orders Tab_**
 
 * *Notes*
     - Must be 12-month period date range
@@ -44,7 +44,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 
 ### Media Requests
 * Tracks 12-Month periods in ( Number & Volumes ) of each Media Requests
-  - Data From: Orders
+  - data coming-from: **_Orders Tab_**
 
 * *Notes*
     - Must be 12-month period date range
@@ -56,7 +56,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
  
 ### Source Requests
 * Tracks 12-Month periods in ( Country & Affiliation ) of each Requests
-  - Data From: Orders
+  - data coming-from: **_Orders Tab_**
 
 * *Notes*
     - Must be 12-month period date range
@@ -68,7 +68,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     
 ### Strains Ordered
 * Tracks any-entered periods in ( Total Count & Latest Order Date ) of each Strains Requests
-  - Data From: Orders
+  - data coming-from: **_Orders Tab_**
 
 * *Notes*
     - Enter any period date range
@@ -81,7 +81,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
     
 ### Service Revenue Breakdown
 * Tracks 12-Month periods in Total Revenue of each CPCC Service Requests
-  - Data From: Orders
+  - data coming-from: **_Orders Tab_**
 
 * *Notes*
     - Must be 12-month period date range
@@ -91,7 +91,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
  
 ### Users List
 * Tracks any-entered periods oragnizes all Primary User of each Requests: (Primary User Details, Count of Request from Primary User, All associated Additional User for each Primary User)
-  - Data From: Orders
+  - data coming-from: **_Orders Tab_**
     
 * *Notes*
     - Enter any period date range
@@ -101,7 +101,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
  
 ### Instituion List
 * Tracks any-entered periods organizes all Institution of each Requests: (Primary User Details, Count of Request from Institution, All associated Primary/Additional User for each Institution )
-  - Data From: User List
+  - data coming-from: **_User List_**
     
 * *Notes*
     - Enter any period date range
