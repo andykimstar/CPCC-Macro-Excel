@@ -1,19 +1,22 @@
 # CPCC-Macro-Excel-File
 
 ## Description
-The development of this product is completely led by myself from design, development, testing and management (CI/CD) as part of the Part-Time work at the Canadian Phycological Culture Centre (CPCC) Biology Lab at University of Wateroo. 
+In collaboration with Heather Roshon () from [Canadian Phycological Culture Centre](https://uwaterloo.ca/canadian-phycological-culture-centre/about) (CPCC) Biology Lab at University of Wateroo, a Macro Excel file was created to automate the data processing and collection to evaluate the performance of the CPCC Biology Lab
+The project was initiated & led by myself in the product from design, development, testing and management.
 It was initiated by myself with suggestion and presention to the Professor in effort to help the tracking of the Sales & Customers of the Lab. 
 
-Canadian Phycological Culture Centre (CPCC) Link: [https://uwaterloo.ca/canadian-phycological-culture-centre/](https://uwaterloo.ca/canadian-phycological-culture-centre/about)
 
+## Purpose
 The Macro Excel (.xlsx) is a variation Excel File with a layer of coding embedded in the file. 
 The goal of this Macro-Excel file is to eliminate redunant manual labour, while saving time though the automation process. 
 
-## Purpose
-This code is to automate the data processing and collection to evaluate the performance of the CPCC Biology Lab in University of Waterloo. 
+Hence the project automates the data processing and collection to evaluate the performance of the CPCC Biology Lab in University of Waterloo. 
 It eliminates the manual work of collection as the code intends to clean data, construct variables, and run statistical analysis
 
 This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
+
+
+[Link to the recording](https://youtu.be/qNkoCGgKEuw))
 
 ## Design
 ![CPCC-Design](https://github.com/user-attachments/assets/2d1319d7-8fd6-4aba-9712-16ec8978b1a2)
