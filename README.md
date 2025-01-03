@@ -8,12 +8,12 @@ It was initiated by myself with suggestion and presention to the Professor in ef
 
 
 ## Purpose
-The Macro-Excel file carries the goal of eliminating the redunant manual labour, while saving time though the automation process. 
+⋅⋅⋅The Macro-Excel file carries the goal of eliminating the redunant manual labour, while saving time though the automation process. 
 Hence the project automates the data processing and collection to evaluate the performance of the CPCC Biology Lab in University of Waterloo. 
-It intends to organize the data, construct variables, and run statistical analysis
+It intends to organize the data, construct variables, and run statistical analysis⋅⋅
 
-This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
-More can be find here, [Link to the recording](https://youtu.be/qNkoCGgKEuw))
+⋅⋅⋅This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
+More can be find here, [Link to the recording](https://youtu.be/qNkoCGgKEuw))⋅⋅
 
 
 
