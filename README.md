@@ -13,7 +13,9 @@ Hence the project automates the data processing and collection to evaluate the p
 It intends to organize the data, construct variables, and run statistical analysis.
 
 This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
-More can be find here, [Link to the recording](https://youtu.be/qNkoCGgKEuw)).
+
+ 
+[Link to the recording](https://youtu.be/qNkoCGgKEuw)).
 
 
 
