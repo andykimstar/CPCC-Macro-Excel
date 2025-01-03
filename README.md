@@ -27,6 +27,8 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 ### Watch out
 * Allow Trust notification - Click
 * Colors of the tab for the separation between automation/non-automation & merge/non-merge
+* '"-" for column F if the DATE FROM is after December 2022 in the case of Zeros
+* '"-" for column E if the DATE FROM in before December 2022 in the case of Zeros
 
 ### Orders
 * Entry of each request of Order
