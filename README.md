@@ -32,7 +32,7 @@ This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. O
 
 ### Usage
 * Tracks 12-Month periods usage/deatils of the Requests
-  - Data From: Orders
+  -> Data Coming-from: _Orders Tab_**
 
 * *Notes*
     - Must be 12-month period date range
