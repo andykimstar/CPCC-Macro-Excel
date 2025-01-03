@@ -6,21 +6,19 @@ The project was initiated & led by myself in the product from design, developmen
 It was initiated by myself with suggestion and presention to the Professor in effort to help the tracking of the Sales & Customers of the Lab. 
 
 
-## Purpose
-The Macro Excel (.xlsx) is a variation Excel File with a layer of coding embedded in the file. 
-The goal of this Macro-Excel file is to eliminate redunant manual labour, while saving time though the automation process. 
 
+## Purpose
+The Macro-Excel file carries the goal of eliminating the redunant manual labour, while saving time though the automation process. 
 Hence the project automates the data processing and collection to evaluate the performance of the CPCC Biology Lab in University of Waterloo. 
-It eliminates the manual work of collection as the code intends to clean data, construct variables, and run statistical analysis
+It intends to organize the data, construct variables, and run statistical analysis
 
 This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
+More can be find here, [Link to the recording](https://youtu.be/qNkoCGgKEuw))
 
 
-[Link to the recording](https://youtu.be/qNkoCGgKEuw))
 
 ## Design
 ![CPCC-Design](https://github.com/user-attachments/assets/2d1319d7-8fd6-4aba-9712-16ec8978b1a2)
-
 
 
 
