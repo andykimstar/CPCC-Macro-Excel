@@ -1,7 +1,9 @@
-Sub Source_Of_Request2()
+Sub Source_Of_Request()
 
 
 '***************************************** USER EDITS *********************************************
+' Last Edit: 2025-01-02
+
 
 ' Sheet Name
 fromsheetName = "Orders"
@@ -10,6 +12,8 @@ sheetName = "Source Requests"
 'Set the Columns in the 'Order'
 affColumn = "I"
 countryColumn = "H"
+mergedColumn = "AB" 'Total Cost $CAD
+'Set the Rows in the 'Source Requests'
 CAstart = 4
 IAstart = 5
 CGstart = 6
@@ -75,17 +79,18 @@ Dim IC_Request As New Collection
 Dim IG_Request As New Collection
 
 ' Loop Through to collect data for the Affiliation Requests
-For row = No_Of_Rows To 3 Step -1
+For row = No_Of_Rows To 2 Step -1
 
     ' Find the date of each data
     Set Cell = Range("A" & row)
     cellDate = Format(Cell.Value, "yyyy-mm-dd")
     
     ' Find the affiliation
-    Set affiliation = Range(affColumn & row)
+    affiliation = Range(affColumn & row).Text
+    Set merged = Range(mergedColumn & row)
     
     ' Only collect data within the selected year
-    If cellDate >= DateFrom And cellDate <= DateTo Then
+    If merged <> "" And cellDate >= DateFrom And cellDate <= DateTo Then
     
         If affiliation = "CA" Then
             CA_Request.Add cellDate
@@ -377,10 +382,11 @@ For n = 1 To 12
         cellDate = Format(Cell.Value, "yyyy-mm-dd")
         
         ' Find the Country
-        Set country = Range(countryColumn & row)
+        country = Range(countryColumn & row).Text
+        Set merged = Range(mergedColumn & row)
         
         ' Only collect data within the selected year
-        If cellDate >= DateFrom And cellDate <= DateTo Then
+        If merged <> "" And cellDate >= DateFrom And cellDate <= DateTo Then
         
             ' Only collect data if its a matching month
             If Month(DateNext) = Month(cellDate) Then
@@ -415,10 +421,10 @@ Dim CountryList As New Collection
 
 ' Find the Number of countries
 No_Of_Rows = Range("A" & Rows.Count).End(xlUp).row
-lastRow = No_Of_Rows - 1
+LastRow = No_Of_Rows - 1
 
 ' Add the each country to the Country Collection
-For n = startCountry To lastRow
+For n = startCountry To LastRow
     country = Range("A" & n)
     CountryList.Add country
 Next n
@@ -744,6 +750,7 @@ End If
 Set MyRange = Sheets(sheetName).Range("A" & AffStart & ":A" & AffEnd & ",O" & AffStart & ":P" & AffEnd)
 ActiveSheet.Shapes.AddChart.Select
 ActiveChart.SetSourceData Source:=MyRange
+ActiveChart.PlotBy = xlColumns
 ActiveChart.ChartType = xl3DPie
 
 ' Chart Layout
@@ -755,18 +762,27 @@ End With
 With ActiveChart
     '.Legend.Delete
     '.ChartTitle.Delete
-    .ChartTitle.Text = "Source of Requests to CPCC " & YearFrom & " - " & YearTo
+    .ChartTitle.Text = "Source of Requests to CPCC  (" & FromYear & " - " & ToYear & ")"
 End With
 
 ' Data setup
 With ActiveChart.SeriesCollection(1)
     .DataLabels.Font.Name = "Arial"
     .DataLabels.Font.Size = 11
-    .DataLabels.ShowPercentage = True
+With ActiveChart.SeriesCollection(1).DataLabels
+    .ShowPercentage = True
+    '.Separator = " "
+    .Separator = "" & Chr(10) & ""
+    .ShowValue = True
+End With
+
+
+    '.ApplyDataLabels Type:=xlDataLabelsShowLabel
+    '.DataLabels.LegendKey = True
     '.DataLabels.ShowValue = True
     .Points(1).Format.Fill.ForeColor.RGB = RGB(153, 153, 255)
     .Points(2).Format.Fill.ForeColor.RGB = RGB(153, 51, 102)
-    .Points(3).Format.Fill.ForeColor.RGB = RGB(255, 255, 204)
+    .Points(3).Format.Fill.ForeColor.RGB = RGB(255, 254, 204)
     .Points(4).Format.Fill.ForeColor.RGB = RGB(0, 128, 0)
     .Points(5).Format.Fill.ForeColor.RGB = RGB(255, 128, 128)
     .Points(6).Format.Fill.ForeColor.RGB = RGB(51, 153, 255)
@@ -774,7 +790,7 @@ End With
 
 ' Size of the Pie
 With ActiveChart.PlotArea
-    .Width = 170
+    .Width = 160
     .Height = 160
     .Left = 100
     .Top = 100
@@ -792,5 +808,3 @@ End With
 Sheets(sheetName).Select
 
 End Sub
-
-
