@@ -24,6 +24,8 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 ### Orders
 * Entry of each request of Order
 * Colors of the tab for the separation between automation/non-automation & merge/non-merge
+
+
 | Condition  | Colour |
 | ------------- | ------------- |
 | Automation & Non-Merge  | Green Cell w/ Black Text  |
