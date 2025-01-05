@@ -2,7 +2,6 @@ Sub List_of_Users()
 
 
 '***************************************** USER EDITS *********************************************
-' Last Edit: 2025-01-02
 
 ' Sheet Name
 fromsheetName = "Orders"
@@ -203,19 +202,22 @@ For iCntr = LastRow To StartRow Step -1
             Duplicate_sUSer = Cells(iCntr, 2)
             Original_sUser = Cells(matchFoundIndex, 2)
             
-            ' Condition in adding Duplicate User
-            If InStr(Original_sUser, Duplicate_sUSer) <= 0 Then
-            
-                If Original_sUser <> "-" And Duplicate_sUSer <> "-" Then
-                     Cells(matchFoundIndex, 2) = Original_sUser + ", " + Duplicate_sUSer
-                End If
-                
-                If Original_sUser = "-" Then
-                    Cells(matchFoundIndex, 2) = Duplicate_sUSer
-                End If
-                
+            ' Condition in adding Duplicate User one by one
+            If Duplicate_sUSer <> "-" Then
+                For Each itm In Split(Duplicate_sUSer, ", ")
+                    If InStr(Original_sUser, itm) <= 0 Then
+                    
+                        If Original_sUser <> "-" And Duplicate_sUSer <> "-" Then
+                             Cells(matchFoundIndex, 2) = Original_sUser + ", " + itm
+                        End If
+                        
+                        If Original_sUser = "-" Then
+                            Cells(matchFoundIndex, 2) = itm
+                        End If
+                        
+                    End If
+                Next itm
             End If
-            
             ' Duplicate Request
             duplicate_request = Cells(iCntr, 7)
             original_request = Cells(matchFoundIndex, 7) + duplicate_request
@@ -269,3 +271,9 @@ Range("F" & TotalRow).Font.Bold = True 'Bold
 Range("G" & TotalRow).Font.Bold = True 'Bold
 
 End Sub
+
+
+
+
+
+
