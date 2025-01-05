@@ -146,7 +146,7 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 ![MacroSetting](https://github.com/user-attachments/assets/4c2841e8-c8d4-4ebb-a523-5f2256afbff5)
 
 
-### Override Excel Security by Unblocking the Macros when the Excel File asks -> Allow Trusted File
+### Override Excel Security to unblock and allow trusted file
 
 1. Click on the Properties of the Excel File
 2. Scroll Down to "Unblock"
