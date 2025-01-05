@@ -1,5 +1,3 @@
-# CPCC-Macro-Excel-File
-
 ## Description
 In collaboration with  [Canadian Phycological Culture Centre](https://uwaterloo.ca/canadian-phycological-culture-centre/about) (CPCC) Biology Lab at University of Wateroo, a Macro Excel file was created to automate the data processing and collection to evaluate the performance of the CPCC Biology Lab.
 The project was initiated & led from the product from design, development, testing and management.
@@ -26,7 +24,7 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 
 ### Watch out
 * Allow Trust notification - Click
-* Colors of the tab for the separation between automation/non-automation & merge/non-merge
+* Colors of the tab for the separation between automation/non-automation & merge/non-merge  (Green w/ Black Text = Automation & non-merge   +   Dark Green w/ White Text = Automation & Merge   +    White = Non-Automation)
 * '"-" for column F if the DATE FROM is after December 2022 in the case of Zeros
 * '"-" for column E if the DATE FROM in before December 2022 in the case of Zeros
 
@@ -143,13 +141,16 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 1. Make a copy of the Excel file and re-name
 2. Open the copied Excel File
 3. Go to "FILE" Tab => "INFO" => "Protect Workbook" and select "Always Open Read-Only"
-4. Go to "DEVELOPER" Tab => "Macro Security" => "Macro Settings" and select "Disable VBA macros without notification" + un-select all check-box
+4. Save and CLOSE the Copied File
+5. Re-Open
+![MacroSetting](https://github.com/user-attachments/assets/4c2841e8-c8d4-4ebb-a523-5f2256afbff5)
 
-Step 4. 
-![MacroSetting](https://github.com/user-attachments/assets/731656bd-2a5a-4a66-805e-4ab179dbed48)
 
+### Override Excel Security by Unblocking the Macros when the Excel File asks -> Allow Trusted File
 
-https://github.com/user-attachments/assets/c5f10a6c-fb46-418a-ae39-4c7729128172
+1. Click on the Properties of the Excel File
+2. Scroll Down to "Unblock"
 
+![Security](https://github.com/user-attachments/assets/272cb18c-bbd9-4be1-9959-ee3676bc2b7f)
 
 
