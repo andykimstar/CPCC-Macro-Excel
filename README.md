@@ -9,11 +9,9 @@ The Macro-Excel file carries the goal of eliminating the redunant manual labour,
 Hence the project automates the data processing and collection to evaluate the performance of the CPCC Biology Lab in University of Waterloo. 
 It intends to organize the data, construct variables, and run statistical analysis.
 
-This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. 
+This CPCC Excel computes & monitor the Orders into a CPCC Operation breakdown. Once the CPCC Orders has been entered correctly, the file is capable of tracking. The file & code here [github](https://github.com/andykimstar/CPCC-Macro-Excel)
 
 I have recorded the overview of the content which can be find here: [Go to Demo](https://youtu.be/qNkoCGgKEuw).
-
-Code can be found here: https://github.com/andykimstar/CPCC-Macro-Excel
 
 
 ## Design
