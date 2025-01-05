@@ -21,19 +21,19 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 
 ## List of Content
 
-### Watch out
-* Allow Trust notification - Click
-* Colors of the tab for the separation between automation/non-automation & merge/non-merge  (Green w/ Black Text = Automation & non-merge   +   Dark Green w/ White Text = Automation & Merge   +    White = Non-Automation)
-* '"-" for column F if the DATE FROM is after December 2022 in the case of Zeros
-* '"-" for column E if the DATE FROM in before December 2022 in the case of Zeros
-
 ### Orders
 * Entry of each request of Order
+* Colors of the tab for the separation between automation/non-automation & merge/non-merge
+  - Green w/ Black Text = Automation & non-merge
+  - Dark Green w/ White Text = Automation & Merge
+  - White = Non-Automation
 
 * *Notes*
     - Button in Top Left Corner will scroll to bottom of Table
     - Watch out for merging rows for columns in Green Tab
     - Please read the notes attached at the top of each column
+
+
 
 ### Usage
 * Tracks 12-Month periods usage/deatils of the Requests
