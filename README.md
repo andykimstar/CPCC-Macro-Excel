@@ -143,6 +143,7 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 3. Go to "FILE" Tab => "INFO" => "Protect Workbook" and select "Always Open Read-Only"
 4. Save and CLOSE the Copied File
 5. Re-Open
+
 ![MacroSetting](https://github.com/user-attachments/assets/4c2841e8-c8d4-4ebb-a523-5f2256afbff5)
 
 
