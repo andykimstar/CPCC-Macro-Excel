@@ -243,11 +243,41 @@ LastRow = Range("A" & Rows.Count).End(xlUp).row
 For iCntr = LastRow To StartRow Step -1
     s = Range("B" & iCntr).Value
     If s <> "-" Then
-        For Each itm In Split(s, ",")    'Split cells 'iterate through the array
+        For Each itm In Split(s, ", ")    'Split cells 'iterate through the array
           CountSecondary = CountSecondary + 1
         Next itm
     End If
 Next
+
+
+' Re-Order all the Clients in Column B
+For iCntr = LastRow To StartRow Step -1
+
+    Dim bry() As Variant
+    ch = Range("B" & iCntr).Value
+    ary = Split(ch, ", ")
+    L = LBound(ary)
+    U = UBound(ary)
+    
+    ' Only when there are more than 2 Additional User
+    If U - L > 0 Then
+        ReDim bry(L To U)
+        
+        For i = LBound(ary) To UBound(ary)
+            bry(i) = ary(i)
+        Next i
+        
+        Call SortFunction(bry)
+        
+        For i = LBound(bry) To UBound(bry)
+            ary(i) = CStr(bry(i))
+        Next i
+        CellSort = Join(ary, ", ")
+        Cells(iCntr, 2) = CellSort
+    End If
+
+Next iCntr
+
 
 
 '***************************************** Count the number of Total
@@ -272,8 +302,21 @@ Range("G" & TotalRow).Font.Bold = True 'Bold
 
 End Sub
 
-
-
-
-
-
+Sub SortFunction(arr)
+    Dim strTemp As Variant
+    Dim i As Long
+    Dim j As Long
+    Dim lngMin As Long
+    Dim lngMax As Long
+    lngMin = LBound(arr)
+    lngMax = UBound(arr)
+    For i = lngMin To lngMax - 1
+        For j = i + 1 To lngMax
+            If arr(i) > arr(j) Then
+                strTemp = arr(i)
+                arr(i) = arr(j)
+                arr(j) = strTemp
+            End If
+        Next j
+    Next i
+End Sub
