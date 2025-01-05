@@ -1,8 +1,5 @@
 Sub Service_Breakdown()
 
-Dim DateFrom As String
-Dim DateTo As String
-
 
 '***************************************** USER EDITS *********************************************
 ' Last Edit: 2025-01-02
@@ -40,6 +37,9 @@ DateEndRow = "U19"
 
 
 '***************************************** Actual Code *********************************************
+
+Dim DateFrom As String
+Dim DateTo As String
 
 '************************************** Service Breakdown: Find Years *******************************************
 
