@@ -38,10 +38,10 @@ DateEndRow = "U19"
 
 '***************************************** Actual Code *********************************************
 
+'************************************** Service Breakdown: Find Years *******************************************
+
 Dim DateFrom As String
 Dim DateTo As String
-
-'************************************** Service Breakdown: Find Years *******************************************
 
 '** Move to the Service Revenue Breakdown Sheet
 Sheets(sheetName).Select
