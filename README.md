@@ -24,9 +24,16 @@ I have recorded the overview of the content which can be find here: [Go to Demo]
 ### Orders
 * Entry of each request of Order
 * Colors of the tab for the separation between automation/non-automation & merge/non-merge
-  - Green w/ Black Text = Automation & non-merge
-  - Dark Green w/ White Text = Automation & Merge
-  - White = Non-Automation
+| Condition  | Colour |
+| ------------- | ------------- |
+| Automation & Non-Merge  | Green Cell w/ Black Text  |
+| Automation & Merge | Dark Green Cell w/ White Text |
+| Non-Automation  | White Cell |
+
+
+  - Green Cell w/ Black Text = Automation & Non-Merge
+  - Automation & Merge = Dark Green Cell w/ White Text = Automation & Merge
+  - Non-Automation = White Cell
 
 * *Notes*
     - Button in Top Left Corner will scroll to bottom of Table
