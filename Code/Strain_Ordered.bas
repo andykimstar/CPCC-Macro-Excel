@@ -1,8 +1,6 @@
 Sub Strains_Ordered()
 
 '***************************************** USER EDITS *********************************************
-' Last Edit: 2025-01-02
-
 
 ' Sheet Name
 fromsheetName = "Orders"
@@ -238,6 +236,24 @@ For n = startNumber To LastRow
 Next n
 
 
+'*******  Comment out the Zeros
+For n = startNumber To LastRow
+
+    strainNumber = Range("E" & n)
+    totalStrainNumber = Range("F" & n)
+    
+    If DateFrom <= DateInception Then
+        If strainNumber = 0 Then
+            Range("E" & n) = "-"
+        End If
+    Else
+        If totalStrainNumber = 0 Then
+            Range("F" & n) = "-"
+        End If
+    End If
+Next n
+
+
 
 '** Enter the Summary Numbers
 Range("O32") = strainZero
@@ -247,3 +263,10 @@ Range("O35") = strainThousands
 Range("O36") = StrainTenThousands
 Range("O37") = strainZero + strainTens + strainHundreds + strainThousands + StrainTenThousands
 End Sub
+
+
+
+
+
+
+
