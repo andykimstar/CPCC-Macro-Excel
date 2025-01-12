@@ -2,7 +2,7 @@ Sub List_Of_Institution()
 
 
 '***************************************** USER EDITS *********************************************
-' Last Edit: 2025-01-05
+' Last Edit: 2025-01-11
 
 ' Sheet Name
 fromsheetName = "Users List"
@@ -41,6 +41,8 @@ Dim CG_Collection As New Collection
 Dim IA_Collection As New Collection
 Dim IC_Collection As New Collection
 Dim IG_Collection As New Collection
+Dim requestSum_Collection As New Collection
+Dim institutionSum_Collection As New Collection
 Dim nameInstitution As String
 
 LastRow = Range("A" & Rows.Count).End(xlUp).row
@@ -201,6 +203,9 @@ Dim TotalInstitutionSum As Integer
 '** Start going through list of Total Collection
 For Each collectionItem In TotalCollection
 
+    ' Set-Up
+    i = 0
+
     '** Eliminate EMPTY Collections
     If collectionItem.Count <> 0 Then
 
@@ -257,7 +262,23 @@ For Each collectionItem In TotalCollection
                 ' Duplicate User
                 Duplicate_sUSer = Cells(iCntr, 2)
                 Original_sUser = Cells(matchFoundIndex, 2)
-                Cells(matchFoundIndex, 2) = Original_sUser + ", " + Duplicate_sUSer
+                
+                 ' Avoid Duplication of Users
+                    If Duplicate_sUSer <> "-" Then
+                        For Each itm In Split(Duplicate_sUSer, ", ")
+                            If InStr(Original_sUser, itm) <= 0 Then
+                            
+                                If Original_sUser <> "-" And Duplicate_sUSer <> "-" Then
+                                     Cells(matchFoundIndex, 2) = Cells(matchFoundIndex, 2) + ", " + itm
+                                End If
+                                
+                                If Original_sUser = "-" Then
+                                    Cells(matchFoundIndex, 2) = itm
+                                End If
+                                
+                            End If
+                        Next itm
+                    End If
                 
                 ' Duplicate Request
                 duplicate_request = Cells(iCntr, 5)
@@ -273,36 +294,37 @@ For Each collectionItem In TotalCollection
     Next
 
 
+        
 
 
-'***************************************** Re-Order Client Names
-' Re-Order all the Clients in Column B
-For iCntr = LastRow To StartRow Step -1
-
-    Dim bry() As Variant
-    ch = Range("B" & iCntr).Value
-    ary = Split(ch, ", ")
-    L = LBound(ary)
-    U = UBound(ary)
+    '***************************************** Re-Order Client Names
+    ' Re-Order all the Clients in Column B
+    For iCntr = LastRow To StartRow Step -1
     
-    ' Only when there are more than 2 Additional User
-    If U - L > 0 Then
-        ReDim bry(L To U)
+        Dim bry() As Variant
+        ch = Range("B" & iCntr).Value
+        ary = Split(ch, ", ")
+        L = LBound(ary)
+        U = UBound(ary)
         
-        For i = LBound(ary) To UBound(ary)
-            bry(i) = ary(i)
-        Next i
-        
-        Call SortFunction(bry)
-        
-        For i = LBound(bry) To UBound(bry)
-            ary(i) = CStr(bry(i))
-        Next i
-        CellSort = Join(ary, ", ")
-        Cells(iCntr, 2) = CellSort
-    End If
-
-Next iCntr
+        ' Only when there are more than 2 Additional User
+        If U - L > 0 Then
+            ReDim bry(L To U)
+            
+            For i = LBound(ary) To UBound(ary)
+                bry(i) = ary(i)
+            Next i
+            
+            Call SortFunction(bry)
+            
+            For i = LBound(bry) To UBound(bry)
+                ary(i) = CStr(bry(i))
+            Next i
+            CellSort = Join(ary, ", ")
+            Cells(iCntr, 2) = CellSort
+        End If
+    
+    Next iCntr
 
 
 
@@ -328,6 +350,8 @@ Next iCntr
     Range("E" & LastRow + 1) = "TOTAL # OF " & affiliation & " REQUEST =  " & RequestSum
     Range("A" & LastRow + 1).Font.Bold = True
     Range("E" & LastRow + 1).Font.Bold = True
+    institutionSum_Collection.Add InstitutionSum
+    requestSum_Collection.Add RequestSum
     
     'Find the Total Numbers
     TotalInstitutionSum = TotalInstitutionSum + InstitutionSum
@@ -337,6 +361,9 @@ Next iCntr
     Range("A" & LastRow + 1 & ":E" & LastRow + 1).Select
     Selection.Interior.Color = vbYellow
     End If
+    
+    ' Finish-Up
+    i = i + 1
 
 Next collectionItem
 
@@ -381,5 +408,3 @@ Sub SortFunction(arr)
         Next j
     Next i
 End Sub
-
-
