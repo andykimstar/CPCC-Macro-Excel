@@ -2,7 +2,7 @@ Sub List_of_Users()
 
 
 '***************************************** USER EDITS *********************************************
-' Last Edit: 2025-01-05
+' Last Edit: 2025-01-11
 
 ' Sheet Name
 fromsheetName = "Orders"
@@ -209,7 +209,7 @@ For iCntr = LastRow To StartRow Step -1
                     If InStr(Original_sUser, itm) <= 0 Then
                     
                         If Original_sUser <> "-" And Duplicate_sUSer <> "-" Then
-                             Cells(matchFoundIndex, 2) = Original_sUser + ", " + itm
+                             Cells(matchFoundIndex, 2) = Cells(matchFoundIndex, 2) + ", " + itm
                         End If
                         
                         If Original_sUser = "-" Then
